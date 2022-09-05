@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Health</string>
+    <string name="medicamento">Medicamento</string>
+    <string name="buscar">Buscar</string>
+    <string name="salvar">Salvar</string>
+    <string name="inicio_tratamento">Início do tratamento</string>
+    <string name="duracao">Duração (em dias)</string>
+    <string name="intervalo">Intervalo (em horas)</string>
+    <string name="alertas">Alertas</string>
+    <string name="principio_ativo">Princípio Ativo:</string>
+    <string name="medicamento_referencia">Medicamento de Referência:</string>
+    <string name="classe_terapeutica">Classe Terapêutica:</string>
+    <string name="avancar">Avançar</string>
+</resources>

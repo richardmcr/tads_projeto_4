@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mynavgraph"
+    app:startDestination="@id/buscaMedicamentoFragment">
+
+    <fragment
+        android:id="@+id/buscaMedicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.view.BuscaMedicamentosFragment"
+        android:label="fragment_busca_medicamento"
+        tools:layout="@layout/fragment_busca_medicamento" />
+
+    <fragment
+        android:id="@+id/novoLembreteFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.view.NovoLembreteFragment"
+        android:label="NovoLembreteFragment"
+        tools:layout="@layout/fragment_novo_lembrete" />
+    <fragment
+        android:id="@+id/medicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.view.MedicamentoFragment"
+        android:label="MedicamentoFragment" />
+</navigation>
