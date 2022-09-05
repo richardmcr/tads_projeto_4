@@ -10,17 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import uni9.projetopraticoemsistemas.myhealth.R;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.BuscaResponse;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.ContentResponse;
-import uni9.projetopraticoemsistemas.myhealth.viewmodel.BuscaMedicamentoViewModel;
+import uni9.projetopraticoemsistemas.myhealth.viewmodel.MedicamentoViewModel;
 
 public class MedicamentoFragment extends Fragment {
-    
-    private BuscaMedicamentoViewModel viewModel;
+
+    private MedicamentoViewModel viewModel;
+    private MedicamentoFragmentArgs medicamentoFragmentArgs;
 
     private TextView ttvNomeComercial, ttvRazaoSocialCnpj, ttvPrincipioAtivo, ttvMedicamentoReferencia, ttvClasseTerapeutica;
     private Button btnAvancar;
@@ -29,15 +28,20 @@ public class MedicamentoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(BuscaMedicamentoViewModel.class);
+        medicamentoFragmentArgs = MedicamentoFragmentArgs.fromBundle(getArguments());
+
+        viewModel = new ViewModelProvider(this).get(MedicamentoViewModel.class);
         viewModel.init();
-        viewModel.getBuscaResponseLiveData().observe(this, new Observer<BuscaResponse>() {
-            @Override
-            public void onChanged(BuscaResponse buscaResponse) {
-                if (buscaResponse != null) {
-                }
+        viewModel.getMedicamentoEntityLiveData().observe(this, medicamentoEntity -> {
+            if (medicamentoEntity != null) {
+                ttvNomeComercial.setText(medicamentoEntity.getNomeComercial());
+                ttvRazaoSocialCnpj.setText(medicamentoEntity.getRazaoSocial()); //todo
+                ttvPrincipioAtivo.setText(medicamentoEntity.getPrincipioAtivo());
+                ttvMedicamentoReferencia.setText(medicamentoEntity.getMedicamentoReferencia());
+                ttvClasseTerapeutica.setText(medicamentoEntity.getClassesTerapeuticas());
             }
         });
+        viewModel.obterMedicamento(medicamentoFragmentArgs.getIdProduto());
     }
 
     @Nullable
@@ -52,23 +56,9 @@ public class MedicamentoFragment extends Fragment {
         ttvClasseTerapeutica = view.findViewById(R.id.ttv_classe_terapeutica);
         btnAvancar = view.findViewById(R.id.btn_avancar);
 
-        btnAvancar.setOnClickListener(v -> buscarMedicamentos());
+        btnAvancar.setOnClickListener(v ->  Navigation.findNavController(v).navigate(MedicamentoFragmentDirections.actionMedicamentoFragmentToNovoLembreteFragment()));
 
         return view;
-    }
-
-    public void buscarMedicamentos() {
-        String nome = ttvNomeComercial.getEditableText().toString();
-
-        viewModel.buscarMedicamentos(nome);
-    }
-
-    public void obterMedicamento(String numProcesso) {
-        viewModel.obterMedicamento(numProcesso);
-    }
-
-    public void salvarMedicamento(ContentResponse item){
-        viewModel.salvarMedicamento(item);
     }
 
 }

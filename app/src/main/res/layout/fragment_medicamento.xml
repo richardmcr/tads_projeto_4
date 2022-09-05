@@ -1,63 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".view.MedicamentoFragment">
 
     <TextView
         android:id="@+id/ttv_nome_comercial"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:text="Nome Comercial" />
 
     <TextView
         android:id="@+id/ttv_razao_social_cnpj"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:text="Razão Social/CNPJ"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/principio_ativo"/>
+            android:text="@string/principio_ativo" />
 
         <TextView
             android:id="@+id/ttv_principio_ativo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:text="Princípio Ativo" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/medicamento_referencia"/>
+            android:text="@string/medicamento_referencia" />
 
         <TextView
             android:id="@+id/ttv_medicamento_referencia"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:text="Medicamento Referência" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/classe_terapeutica"/>
+            android:text="@string/classe_terapeutica" />
 
         <TextView
             android:id="@+id/ttv_classe_terapeutica"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:text="Classe Terapêutica" />
     </LinearLayout>
 
     <Button
