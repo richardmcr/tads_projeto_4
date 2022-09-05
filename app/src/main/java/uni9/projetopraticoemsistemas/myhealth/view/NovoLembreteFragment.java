@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +24,8 @@ public class NovoLembreteFragment extends Fragment {
     private NovoLembreteViewModel viewModel;
 
     private TextInputEditText tietMedicamento, tietInicioTratamento, tietDuracao, tietIntervalo;
-    private TextInputEditText tietAlertas;
-    private Button btnBuscar;
+    private Switch swtAlertas;
+    private Button btnSalvar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +53,10 @@ public class NovoLembreteFragment extends Fragment {
         tietInicioTratamento = view.findViewById(R.id.tiet_inicio_tratamento);
         tietDuracao = view.findViewById(R.id.tiet_duracao);
         tietIntervalo = view.findViewById(R.id.tiet_intervalo);
-        tietAlertas = view.findViewById(R.id.tiet_alertas);
+        swtAlertas = view.findViewById(R.id.swt_alertas);
+        btnSalvar = view.findViewById(R.id.btn_salvar);
 
-        btnBuscar.setOnClickListener(v -> salvarLembrete());
+        btnSalvar.setOnClickListener(v -> salvarLembrete());
 
         return view;
     }
