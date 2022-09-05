@@ -11,4 +11,5 @@
     <string name="medicamento_referencia">Medicamento de Referência:</string>
     <string name="classe_terapeutica">Classe Terapêutica:</string>
     <string name="avancar">Avançar</string>
+    <string name="login">Login</string>
 </resources>
