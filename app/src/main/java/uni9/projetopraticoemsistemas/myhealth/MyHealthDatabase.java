@@ -20,7 +20,7 @@ public abstract class MyHealthDatabase extends RoomDatabase {
 
     public static synchronized MyHealthDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), MyHealthDatabase.class , "Database_name")
+            instance = Room.databaseBuilder(context.getApplicationContext(), MyHealthDatabase.class , "MyHealthDatabase")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack)
                     .build();
