@@ -1,5 +1,6 @@
 package uni9.projetopraticoemsistemas.myhealth.model.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -20,8 +21,6 @@ public class MedicamentoEntity {
     private String numProcesso;
 
     private String idBulaPacienteProtegido;
-
-    private String codigoProduto;
 
     private String nomeComercial;
 
@@ -81,14 +80,6 @@ public class MedicamentoEntity {
         this.idBulaPacienteProtegido = idBulaPacienteProtegido;
     }
 
-    public String getCodigoProduto() {
-        return codigoProduto;
-    }
-
-    public void setCodigoProduto(String codigoProduto) {
-        this.codigoProduto = codigoProduto;
-    }
-
     public String getNomeComercial() {
         return nomeComercial;
     }
@@ -134,14 +125,15 @@ public class MedicamentoEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedicamentoEntity that = (MedicamentoEntity) o;
-        return Objects.equals(idProduto, that.idProduto) && Objects.equals(nomeProduto, that.nomeProduto) && Objects.equals(razaoSocial, that.razaoSocial) && Objects.equals(cnpj, that.cnpj) && Objects.equals(numProcesso, that.numProcesso) && Objects.equals(idBulaPacienteProtegido, that.idBulaPacienteProtegido) && Objects.equals(codigoProduto, that.codigoProduto) && Objects.equals(nomeComercial, that.nomeComercial) && Objects.equals(classesTerapeuticas, that.classesTerapeuticas) && Objects.equals(medicamentoReferencia, that.medicamentoReferencia) && Objects.equals(codigoBulaPaciente, that.codigoBulaPaciente) && Objects.equals(principioAtivo, that.principioAtivo);
+        return Objects.equals(idProduto, that.idProduto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduto, nomeProduto, razaoSocial, cnpj, numProcesso, idBulaPacienteProtegido, codigoProduto, nomeComercial, classesTerapeuticas, medicamentoReferencia, codigoBulaPaciente, principioAtivo);
+        return Objects.hash(idProduto, nomeProduto, razaoSocial, cnpj, numProcesso, idBulaPacienteProtegido, nomeComercial, classesTerapeuticas, medicamentoReferencia, codigoBulaPaciente, principioAtivo);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MedicamentoEntity{" +
@@ -151,7 +143,6 @@ public class MedicamentoEntity {
                 ", cnpj='" + cnpj + '\'' +
                 ", numProcesso='" + numProcesso + '\'' +
                 ", idBulaPacienteProtegido='" + idBulaPacienteProtegido + '\'' +
-                ", codigoProduto='" + codigoProduto + '\'' +
                 ", nomeComercial='" + nomeComercial + '\'' +
                 ", classesTerapeuticas='" + classesTerapeuticas + '\'' +
                 ", medicamentoReferencia='" + medicamentoReferencia + '\'' +

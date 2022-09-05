@@ -8,6 +8,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import uni9.projetopraticoemsistemas.myhealth.apis.MedicamentoDao;
 import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
 
@@ -15,6 +18,8 @@ import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
 public abstract class MyHealthDatabase extends RoomDatabase {
     
     private static MyHealthDatabase instance;
+    private static final int NUMBER_OF_THREADS = 4;
+    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract MedicamentoDao medicamentoDao();
 
@@ -27,7 +32,6 @@ public abstract class MyHealthDatabase extends RoomDatabase {
         }
         return instance;
     }
-
 
     private static final RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback(){
         @Override

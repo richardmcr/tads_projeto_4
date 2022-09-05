@@ -1,7 +1,6 @@
 package uni9.projetopraticoemsistemas.myhealth;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -15,13 +14,18 @@ import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uni9.projetopraticoemsistemas.myhealth.apis.BuscaMedicamentoService;
 import uni9.projetopraticoemsistemas.myhealth.apis.MedicamentoDao;
+import uni9.projetopraticoemsistemas.myhealth.mappers.MedicamentoMapper;
+import uni9.projetopraticoemsistemas.myhealth.mappers.MedicamentoMapperImpl;
 import uni9.projetopraticoemsistemas.myhealth.model.dto.BuscaResponse;
+import uni9.projetopraticoemsistemas.myhealth.model.dto.ContentResponse;
 import uni9.projetopraticoemsistemas.myhealth.model.dto.MedicamentoResponse;
 import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
 
 public class MedicamentoRepository {
 
     private static final String BASE_URL = "https://bula.vercel.app/";
+
+    private final MedicamentoMapper medicamentoMapper;
 
     private final BuscaMedicamentoService buscaMedicamentoService;
     private final MutableLiveData<MedicamentoEntity> medicamentoEntityLiveData;
@@ -33,6 +37,8 @@ public class MedicamentoRepository {
     public MedicamentoRepository(Application application) {
         MyHealthDatabase database = MyHealthDatabase.getInstance(application);
         medicamentoDao = database.medicamentoDao();
+
+        medicamentoMapper = new MedicamentoMapperImpl();
 
         medicamentoEntityLiveData = new MutableLiveData<>();
         buscaResponseLiveData = new MutableLiveData<>();
@@ -50,12 +56,25 @@ public class MedicamentoRepository {
                 .create(BuscaMedicamentoService.class);
     }
 
-    public void insert(MedicamentoEntity medicamento) {
-        new InsertMedicamentoAsyncTask(medicamentoDao).execute(medicamento);
+    public void findMedicamentoById(Long id) {
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            MedicamentoEntity medicamentoEntity = medicamentoDao.FindMedicamentoById(id);
+            medicamentoEntityLiveData.postValue(medicamentoEntity);
+        });
     }
 
-    public void update(MedicamentoEntity medicamento) {
-        new UpdateMedicamentoAsyncTask(medicamentoDao).execute(medicamento);
+    public void insert(ContentResponse contentResponse) {
+        MedicamentoEntity medicamentoEntity = medicamentoMapper.medicamentoDtoToEntity(contentResponse);
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> medicamentoDao.Insert(medicamentoEntity));
+    }
+
+    public void update(MedicamentoResponse medicamentoResponse) {
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            MedicamentoEntity medicamentoEntity = medicamentoDao.FindMedicamentoById(medicamentoResponse.getCodigoProduto());
+            medicamentoMapper.updateMedicamentoEntityFromDto(medicamentoResponse, medicamentoEntity);
+            medicamentoDao.Update(medicamentoEntity);
+            medicamentoResponseLiveData.postValue(null);
+        });
     }
 
     public void buscarMedicamentos(String nome, Integer pagina) {
@@ -103,33 +122,4 @@ public class MedicamentoRepository {
     public LiveData<MedicamentoResponse> getMedicamentoResponseLiveData() {
         return medicamentoResponseLiveData;
     }
-
-    private static class InsertMedicamentoAsyncTask extends AsyncTask<MedicamentoEntity, Void, Void> {
-        private final MedicamentoDao medicamentoDao;
-
-        private InsertMedicamentoAsyncTask(MedicamentoDao medicamentoDao) {
-            this.medicamentoDao = medicamentoDao;
-        }
-
-        @Override
-        protected Void doInBackground(MedicamentoEntity... medicamentos) {
-            medicamentoDao.Insert(medicamentos[0]);
-            return null;
-        }
-    }
-
-    private static class UpdateMedicamentoAsyncTask extends AsyncTask<MedicamentoEntity, Void, Void> {
-        private final MedicamentoDao medicamentoDao;
-
-        private UpdateMedicamentoAsyncTask(MedicamentoDao medicamentoDao) {
-            this.medicamentoDao = medicamentoDao;
-        }
-
-        @Override
-        protected Void doInBackground(MedicamentoEntity... medicamentos) {
-            medicamentoDao.Update(medicamentos[0]);
-            return null;
-        }
-    }
-
 }
