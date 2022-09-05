@@ -3,21 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mynavgraph"
-    app:startDestination="@id/buscaMedicamentoFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.view.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_buscaMedicamentoFragment"
+            app:destination="@id/buscaMedicamentoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/buscaMedicamentoFragment"
         android:name="uni9.projetopraticoemsistemas.myhealth.view.BuscaMedicamentosFragment"
         android:label="fragment_busca_medicamento"
-        tools:layout="@layout/fragment_busca_medicamento" />
+        tools:layout="@layout/fragment_busca_medicamento">
+        <action
+            android:id="@+id/action_buscaMedicamentoFragment_to_medicamentoFragment"
+            app:destination="@id/medicamentoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/novoLembreteFragment"
         android:name="uni9.projetopraticoemsistemas.myhealth.view.NovoLembreteFragment"
         android:label="NovoLembreteFragment"
         tools:layout="@layout/fragment_novo_lembrete" />
+
     <fragment
         android:id="@+id/medicamentoFragment"
         android:name="uni9.projetopraticoemsistemas.myhealth.view.MedicamentoFragment"
-        android:label="MedicamentoFragment" />
+        android:label="MedicamentoFragment"
+        tools:layout="@layout/fragment_medicamento" >
+        <argument
+            android:name="idProduto"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_medicamentoFragment_to_novoLembreteFragment"
+            app:destination="@id/novoLembreteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+    </fragment>
 </navigation>

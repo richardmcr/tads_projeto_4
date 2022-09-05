@@ -6,7 +6,8 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/activity_novo_lembrete.xml" value="0.14402173913043478" />
-        <entry key="app/src/main/res/layout/fragment_busca_medicamento.xml" value="0.14402173913043478" />
+        <entry key="app/src/main/res/layout/fragment_busca_medicamento.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/fragment_medicamento.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/fragment_novo_lembrete.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/medicamento_item.xml" value="0.14402173913043478" />
