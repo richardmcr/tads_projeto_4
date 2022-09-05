@@ -1,5 +1,7 @@
 package uni9.projetopraticoemsistemas.myhealth.model.dto;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +12,7 @@ public class MedicamentoResponse {
 
     @SerializedName("codigoProduto")
     @Expose
-    private String codigoProduto;
+    private Long codigoProduto;
 
     @SerializedName("nomeComercial")
     @Expose
@@ -32,11 +34,11 @@ public class MedicamentoResponse {
     @Expose
     private String principioAtivo;
 
-    public String getCodigoProduto() {
+    public Long getCodigoProduto() {
         return codigoProduto;
     }
 
-    public void setCodigoProduto(String codigoProduto) {
+    public void setCodigoProduto(Long codigoProduto) {
         this.codigoProduto = codigoProduto;
     }
 
@@ -93,6 +95,7 @@ public class MedicamentoResponse {
         return Objects.hash(codigoProduto, nomeComercial, classesTerapeuticas, medicamentoReferencia, codigoBulaPaciente, principioAtivo);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MedicamentoResponse{" +
