@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -79,7 +80,7 @@ public class MedicamentoRepository {
                 });
     }
 
-    public void buscarMedicamentosOffline(String nome){
+    public void buscarMedicamentosOffline(String nome) {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
             List<MedicamentoEntity> medicamentoEntityList = medicamentoDao.findMedicamentoByNome(nome);
             medicamentoListLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamentos(medicamentoEntityList));
@@ -87,7 +88,7 @@ public class MedicamentoRepository {
         });
     }
 
-    public void salvarMedicamento(Medicamento medicamento){
+    public void salvarMedicamento(Medicamento medicamento) {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
             MedicamentoEntity medicamentoEntity = medicamentoMapper.medicamentoToMedicamentoEntity(medicamento);
             medicamentoDao.insert(medicamentoEntity);
@@ -117,16 +118,20 @@ public class MedicamentoRepository {
                     @Override
                     public void onFailure(@NonNull Call<MedicamentoResponse> call, @NonNull Throwable t) {
                         eventosMutableLiveData.postValue(new Eventos.MensagemErro("erro_conexao"));
-                        obterMedicamentoOffline(idMedicamento);
                     }
                 });
     }
 
-    public void obterMedicamentoOffline(Long idMedicamento){
+    public void obterMedicamentoOffline(Long idMedicamento, String processo) {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
             MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(idMedicamento);
-            medicamentoLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
-            eventosMutableLiveData.postValue(new Eventos.MensagemErro("resultados_offline"));
+            if (Objects.isNull(medicamentoEntity)
+                    || Objects.isNull(medicamentoEntity.getNomeComercial())) {
+                obterMedicamento(idMedicamento, processo);
+                eventosMutableLiveData.postValue(new Eventos.MensagemErro("resultados_offline"));
+            } else {
+                medicamentoLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
+            }
         });
     }
 

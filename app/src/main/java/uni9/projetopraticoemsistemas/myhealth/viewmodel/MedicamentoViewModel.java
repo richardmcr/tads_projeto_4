@@ -38,7 +38,7 @@ public class MedicamentoViewModel extends AndroidViewModel {
 
     public void obterMedicamento(Long idMedicamento, String processo) {
         loadingLiveData.setValue(Boolean.TRUE);
-        medicamentoRepository.obterMedicamento(idMedicamento, processo);
+        medicamentoRepository.obterMedicamentoOffline(idMedicamento, processo);
     }
 
     public MutableLiveData<Medicamento> getMedicamentoLiveData() {
