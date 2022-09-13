@@ -1,10 +1,14 @@
 package uni9.projetopraticoemsistemas.myhealth;
 
-import android.app.Application;
+import static uni9.projetopraticoemsistemas.myhealth.helper.DateFormatter.longDateToStringDate;
+import static uni9.projetopraticoemsistemas.myhealth.helper.DateFormatter.longDateToStringTime;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -14,67 +18,47 @@ import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uni9.projetopraticoemsistemas.myhealth.apis.BuscaMedicamentoService;
 import uni9.projetopraticoemsistemas.myhealth.apis.MedicamentoDao;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.mappers.MedicamentoMapper;
-import uni9.projetopraticoemsistemas.myhealth.mappers.MedicamentoMapperImpl;
+import uni9.projetopraticoemsistemas.myhealth.model.Lembrete;
+import uni9.projetopraticoemsistemas.myhealth.model.Medicamento;
 import uni9.projetopraticoemsistemas.myhealth.model.dto.BuscaResponse;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.ContentResponse;
 import uni9.projetopraticoemsistemas.myhealth.model.dto.MedicamentoResponse;
 import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
 
 public class MedicamentoRepository {
 
-    private static final String BASE_URL = "https://bula.vercel.app/";
-
     private final MedicamentoMapper medicamentoMapper;
 
     private final BuscaMedicamentoService buscaMedicamentoService;
-    private final MutableLiveData<MedicamentoEntity> medicamentoEntityLiveData;
-    private final MutableLiveData<BuscaResponse> buscaResponseLiveData;
-    private final MutableLiveData<MedicamentoResponse> medicamentoResponseLiveData;
-
     private final MedicamentoDao medicamentoDao;
 
-    public MedicamentoRepository(Application application) {
-        MyHealthDatabase database = MyHealthDatabase.getInstance(application);
-        medicamentoDao = database.medicamentoDao();
+    private final MutableLiveData<List<Medicamento>> medicamentoListLiveData;
+    private final MutableLiveData<Medicamento> medicamentoLiveData;
+    private final MutableLiveData<Lembrete> lembreteLiveData;
+    private final MutableLiveData<Eventos<?>> eventosMutableLiveData;
 
-        medicamentoMapper = new MedicamentoMapperImpl();
+    @Inject
+    public MedicamentoRepository(MedicamentoDao medicamentoDao,
+                                 MedicamentoMapper medicamentoMapper) {
+        this.medicamentoDao = medicamentoDao;
+        this.medicamentoMapper = medicamentoMapper;
 
-        medicamentoEntityLiveData = new MutableLiveData<>();
-        buscaResponseLiveData = new MutableLiveData<>();
-        medicamentoResponseLiveData = new MutableLiveData<>();
+        this.medicamentoListLiveData = new MutableLiveData<>();
+        this.medicamentoLiveData = new MutableLiveData<>();
+        this.lembreteLiveData = new MutableLiveData<>();
+        this.eventosMutableLiveData = new MutableLiveData<>();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.level(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        buscaMedicamentoService = new retrofit2.Retrofit.Builder()
-                .baseUrl(BASE_URL)
+        this.buscaMedicamentoService = new retrofit2.Retrofit.Builder()
+                .baseUrl("https://bula.vercel.app/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(BuscaMedicamentoService.class);
-    }
-
-    public void findMedicamentoById(Long id) {
-        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
-            MedicamentoEntity medicamentoEntity = medicamentoDao.FindMedicamentoById(id);
-            medicamentoEntityLiveData.postValue(medicamentoEntity);
-        });
-    }
-
-    public void insert(ContentResponse contentResponse) {
-        MedicamentoEntity medicamentoEntity = medicamentoMapper.medicamentoDtoToEntity(contentResponse);
-        MyHealthDatabase.databaseWriteExecutor.execute(() -> medicamentoDao.Insert(medicamentoEntity));
-    }
-
-    public void update(MedicamentoResponse medicamentoResponse) {
-        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
-            MedicamentoEntity medicamentoEntity = medicamentoDao.FindMedicamentoById(medicamentoResponse.getCodigoProduto());
-            medicamentoMapper.updateMedicamentoEntityFromDto(medicamentoResponse, medicamentoEntity);
-            medicamentoDao.Update(medicamentoEntity);
-            medicamentoResponseLiveData.postValue(null);
-        });
     }
 
     public void buscarMedicamentos(String nome, Integer pagina) {
@@ -83,43 +67,94 @@ public class MedicamentoRepository {
                     @Override
                     public void onResponse(@NonNull Call<BuscaResponse> call, @NonNull Response<BuscaResponse> response) {
                         if (response.body() != null) {
-                            buscaResponseLiveData.postValue(response.body());
+                            medicamentoListLiveData.postValue(medicamentoMapper.contentResponseToMedicamentos(response.body().getContentResponse()));
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<BuscaResponse> call, @NonNull Throwable t) {
-                        buscaResponseLiveData.postValue(null);
+                        eventosMutableLiveData.postValue(new Eventos.MensagemErro("erro_conexao"));
+                        buscarMedicamentosOffline(nome);
                     }
                 });
     }
 
-    public void obterMedicamento(String numProcesso) {
-        buscaMedicamentoService.obterMedicamento(numProcesso)
+    public void buscarMedicamentosOffline(String nome){
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            List<MedicamentoEntity> medicamentoEntityList = medicamentoDao.findMedicamentoByNome(nome);
+            medicamentoListLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamentos(medicamentoEntityList));
+            eventosMutableLiveData.postValue(new Eventos.MensagemErro("resultados_offline"));
+        });
+    }
+
+    public void salvarMedicamento(Medicamento medicamento){
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            MedicamentoEntity medicamentoEntity = medicamentoMapper.medicamentoToMedicamentoEntity(medicamento);
+            medicamentoDao.insert(medicamentoEntity);
+            medicamentoEntity = medicamentoDao.findMedicamentoById(medicamento.getId());
+            medicamentoLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
+        });
+    }
+
+    public void obterMedicamento(Long idMedicamento, String processo) {
+        buscaMedicamentoService.obterMedicamento(processo)
                 .enqueue(new Callback<MedicamentoResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MedicamentoResponse> call, @NonNull Response<MedicamentoResponse> response) {
                         if (response.body() != null) {
-                            medicamentoResponseLiveData.postValue(response.body());
+                            MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+                                MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(idMedicamento);
+                                medicamentoMapper.updateMedicamentoEntityFromMedicamentoResponse(response.body(), medicamentoEntity);
+                                medicamentoDao.insert(medicamentoEntity);
+
+                                Medicamento medicamento = medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity);
+                                medicamentoLiveData.postValue(medicamento);
+                            });
+
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<MedicamentoResponse> call, @NonNull Throwable t) {
-                        medicamentoResponseLiveData.postValue(null);
+                        eventosMutableLiveData.postValue(new Eventos.MensagemErro("erro_conexao"));
+                        obterMedicamentoOffline(idMedicamento);
                     }
                 });
     }
 
-    public LiveData<MedicamentoEntity> getMedicamentoEntityLiveData() {
-        return medicamentoEntityLiveData;
+    public void obterMedicamentoOffline(Long idMedicamento){
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(idMedicamento);
+            medicamentoLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
+            eventosMutableLiveData.postValue(new Eventos.MensagemErro("resultados_offline"));
+        });
     }
 
-    public LiveData<BuscaResponse> getBuscaResponseLiveData() {
-        return buscaResponseLiveData;
+    public void criarLembreteComMedicamento(Long id) {
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(id);
+            Lembrete lembrete = new Lembrete();
+            lembrete.setMedicamento(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
+            lembrete.setDataInicio(longDateToStringDate(System.currentTimeMillis()));
+            lembrete.setHoraInicio(longDateToStringTime(System.currentTimeMillis()));
+            lembrete.setAlertas(Boolean.TRUE);
+            lembreteLiveData.postValue(lembrete);
+        });
     }
 
-    public LiveData<MedicamentoResponse> getMedicamentoResponseLiveData() {
-        return medicamentoResponseLiveData;
+    public MutableLiveData<List<Medicamento>> getMedicamentoListLiveData() {
+        return medicamentoListLiveData;
+    }
+
+    public MutableLiveData<Medicamento> getMedicamentoLiveData() {
+        return medicamentoLiveData;
+    }
+
+    public MutableLiveData<Lembrete> getLembreteLiveData() {
+        return lembreteLiveData;
+    }
+
+    public MutableLiveData<Eventos<?>> getEventosMutableLiveData() {
+        return eventosMutableLiveData;
     }
 }

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,52 +11,98 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
+
 import uni9.projetopraticoemsistemas.myhealth.R;
+import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentMedicamentoBinding;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.viewmodel.MedicamentoViewModel;
 
 public class MedicamentoFragment extends Fragment {
 
     private MedicamentoViewModel viewModel;
-    private MedicamentoFragmentArgs medicamentoFragmentArgs;
-
-    private TextView ttvNomeComercial, ttvRazaoSocialCnpj, ttvPrincipioAtivo, ttvMedicamentoReferencia, ttvClasseTerapeutica;
-    private Button btnAvancar;
+    private FragmentMedicamentoBinding binding;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = FragmentMedicamentoBinding.inflate(inflater, container, false);
 
-        medicamentoFragmentArgs = MedicamentoFragmentArgs.fromBundle(getArguments());
+        viewModel = new ViewModelProvider(requireActivity()).get(MedicamentoViewModel.class);
 
-        viewModel = new ViewModelProvider(this).get(MedicamentoViewModel.class);
-        viewModel.init();
-        viewModel.getMedicamentoEntityLiveData().observe(this, medicamentoEntity -> {
-            if (medicamentoEntity != null) {
-                ttvNomeComercial.setText(medicamentoEntity.getNomeComercial());
-                ttvRazaoSocialCnpj.setText(medicamentoEntity.getRazaoSocial()); //todo
-                ttvPrincipioAtivo.setText(medicamentoEntity.getPrincipioAtivo());
-                ttvMedicamentoReferencia.setText(medicamentoEntity.getMedicamentoReferencia());
-                ttvClasseTerapeutica.setText(medicamentoEntity.getClassesTerapeuticas());
-            }
-        });
-        viewModel.obterMedicamento(medicamentoFragmentArgs.getIdProduto());
+        return binding.getRoot();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_medicamento, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        ttvNomeComercial = view.findViewById(R.id.ttv_nome_comercial);
-        ttvRazaoSocialCnpj = view.findViewById(R.id.ttv_razao_social_cnpj);
-        ttvPrincipioAtivo = view.findViewById(R.id.ttv_principio_ativo);
-        ttvMedicamentoReferencia = view.findViewById(R.id.ttv_medicamento_referencia);
-        ttvClasseTerapeutica = view.findViewById(R.id.ttv_classe_terapeutica);
-        btnAvancar = view.findViewById(R.id.btn_avancar);
+        MedicamentoFragmentArgs medicamentoFragmentArgs = MedicamentoFragmentArgs.fromBundle(getArguments());
 
-        btnAvancar.setOnClickListener(v ->  Navigation.findNavController(v).navigate(MedicamentoFragmentDirections.actionMedicamentoFragmentToNovoLembreteFragment()));
+        viewModel.init();
+        viewModel.getMedicamentoLiveData().observe(getViewLifecycleOwner(), medicamento -> {
+            if (medicamento != null) {
+                binding.textViewNomeComercial.setText(medicamento.getNomeComercial());
+                binding.textViewRazaoSocial.setText(getString(R.string.razao_social_cnpj, medicamento.getRazaoSocial(), medicamento.getCnpj()));
 
-        return view;
+                if (Objects.isNull(medicamento.getPrincipioAtivo()) || medicamento.getPrincipioAtivo().isEmpty()) {
+                    binding.linearLayoutPrincipioAtivo.setVisibility(View.GONE);
+                } else {
+                    binding.textViewPrincipioAtivo.setText(medicamento.getPrincipioAtivo());
+                }
+                if (Objects.isNull(medicamento.getMedicamentoReferencia()) || medicamento.getMedicamentoReferencia().isEmpty()) {
+                    binding.linearLayoutMedicamentoReferencia.setVisibility(View.GONE);
+                } else {
+                    binding.textViewMedicamentoReferencia.setText(medicamento.getMedicamentoReferencia());
+                }
+                if (Objects.isNull(medicamento.getClassesTerapeuticas()) || medicamento.getClassesTerapeuticas().isEmpty()) {
+                    binding.linearLayoutClasseTerapeutica.setVisibility(View.GONE);
+                } else {
+                    binding.textViewClasseTerapeutica.setText(medicamento.getClassesTerapeuticas());
+                }
+
+                binding.floatingActionButtonAvancar.setOnClickListener(v -> Navigation.findNavController(v).navigate(MedicamentoFragmentDirections.actionMedicamentoFragmentToNovoLembreteFragment(medicamento.getId())));
+
+                viewModel.getLoadingLiveData().postValue(Boolean.FALSE);
+            }
+        });
+
+        viewModel.getLoadingLiveData().observe(getViewLifecycleOwner(),
+                isLoading -> {
+                    if (isLoading) {
+                        binding.contentLoadingProgressBar.setVisibility(View.VISIBLE);
+                        binding.cardViewMedicamento.setVisibility(View.GONE);
+                    } else {
+                        binding.contentLoadingProgressBar.setVisibility(View.GONE);
+                        binding.cardViewMedicamento.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        viewModel.obterMedicamento(medicamentoFragmentArgs.getIdMedicamento(), medicamentoFragmentArgs.getProcesso());
+
+        viewModel.getEventosMutableLiveData().observe(getViewLifecycleOwner(),
+                evento -> {
+                    if (!Objects.isNull(evento)) {
+                        if (evento instanceof Eventos.MensagemErro) {
+                            String mensagem = ((Eventos.MensagemErro) evento).getData();
+                            switch (mensagem) {
+                                case "erro_conexao":
+                                    Snackbar.make(requireView(), getString(R.string.erro_conexao), Snackbar.LENGTH_LONG).show();
+                                    break;
+                                case "resultados_offline":
+                                    Snackbar.make(requireView(), getString(R.string.resultados_offline), Snackbar.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Snackbar.make(requireView(), mensagem, Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                        viewModel.getEventosMutableLiveData().setValue(null);
+                    }
+                }
+        );
     }
 
 }

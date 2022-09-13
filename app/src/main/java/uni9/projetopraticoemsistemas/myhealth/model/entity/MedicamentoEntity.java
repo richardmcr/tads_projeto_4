@@ -130,7 +130,7 @@ public class MedicamentoEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduto, nomeProduto, razaoSocial, cnpj, numProcesso, idBulaPacienteProtegido, nomeComercial, classesTerapeuticas, medicamentoReferencia, codigoBulaPaciente, principioAtivo);
+        return Objects.hash(idProduto);
     }
 
     @NonNull

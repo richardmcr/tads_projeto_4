@@ -6,17 +6,22 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
 
 @Dao
 public interface MedicamentoDao {
 
     @Query("SELECT * FROM medicamento WHERE idProduto = :idProduto ")
-    MedicamentoEntity FindMedicamentoById(Long idProduto);
+    MedicamentoEntity findMedicamentoById(Long idProduto);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void Insert(MedicamentoEntity medicamentoEntity);
+    @Query("SELECT * FROM medicamento WHERE nomeProduto like '%'||:nome||'%' ")
+    List<MedicamentoEntity> findMedicamentoByNome(String nome);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(MedicamentoEntity medicamentoEntity);
 
     @Update
-    void Update(MedicamentoEntity medicamentoEntity);
+    void update(MedicamentoEntity medicamentoEntity);
 }

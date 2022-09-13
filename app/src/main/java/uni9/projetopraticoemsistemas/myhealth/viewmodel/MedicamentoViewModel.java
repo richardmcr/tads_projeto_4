@@ -5,30 +5,51 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import uni9.projetopraticoemsistemas.myhealth.MedicamentoRepository;
-import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.model.Medicamento;
 
+@HiltViewModel
 public class MedicamentoViewModel extends AndroidViewModel {
 
     private final MedicamentoRepository medicamentoRepository;
-    private LiveData<MedicamentoEntity> medicamentoEntityLiveData;
+    private final MutableLiveData<Medicamento> medicamentoLiveData;
+    private final MutableLiveData<Boolean> loadingLiveData;
+    private final MutableLiveData<Eventos<?>> eventosMutableLiveData;
 
-    public MedicamentoViewModel(@NonNull Application application) {
+    @Inject
+    public MedicamentoViewModel(@NonNull Application application,
+                                MedicamentoRepository medicamentoRepository) {
         super(application);
-        medicamentoRepository = new MedicamentoRepository(application);
+        this.medicamentoRepository = medicamentoRepository;
+        this.loadingLiveData = new MutableLiveData<>(Boolean.FALSE);
+        this.eventosMutableLiveData = medicamentoRepository.getEventosMutableLiveData();
+        this.medicamentoLiveData = medicamentoRepository.getMedicamentoLiveData();
     }
 
     public void init() {
-        medicamentoEntityLiveData = medicamentoRepository.getMedicamentoEntityLiveData();
+        medicamentoLiveData.setValue(null);
     }
 
-    public void obterMedicamento(Long idProduto) {
-        medicamentoRepository.findMedicamentoById(idProduto);
+    public void obterMedicamento(Long idMedicamento, String processo) {
+        loadingLiveData.setValue(Boolean.TRUE);
+        medicamentoRepository.obterMedicamento(idMedicamento, processo);
     }
 
-    public LiveData<MedicamentoEntity> getMedicamentoEntityLiveData() {
-        return medicamentoEntityLiveData;
+    public MutableLiveData<Medicamento> getMedicamentoLiveData() {
+        return medicamentoLiveData;
+    }
+
+    public MutableLiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
+    }
+
+    public MutableLiveData<Eventos<?>> getEventosMutableLiveData() {
+        return eventosMutableLiveData;
     }
 }

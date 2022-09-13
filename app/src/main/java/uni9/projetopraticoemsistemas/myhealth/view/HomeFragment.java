@@ -23,7 +23,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         btnLogin = view.findViewById(R.id.btn_login);
-        btnLogin.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToBuscaMedicamentoFragment()));
+        btnLogin.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToLembretesFragment()));
 
         return view;
     }

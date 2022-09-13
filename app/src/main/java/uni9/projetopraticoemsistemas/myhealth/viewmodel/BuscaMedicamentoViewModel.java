@@ -5,50 +5,64 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import uni9.projetopraticoemsistemas.myhealth.MedicamentoRepository;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.BuscaResponse;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.ContentResponse;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.MedicamentoResponse;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.model.Medicamento;
 
+@HiltViewModel
 public class BuscaMedicamentoViewModel extends AndroidViewModel {
 
     private final MedicamentoRepository medicamentoRepository;
-    private LiveData<BuscaResponse> buscaResponseLiveData;
-    private LiveData<MedicamentoResponse> medicamentoResponseLiveData;
+    private final MutableLiveData<List<Medicamento>> medicamentoListLiveData;
+    private final MutableLiveData<Medicamento> medicamentoLiveData;
+    private final MutableLiveData<Boolean> loadingLiveData;
+    private final MutableLiveData<Eventos<?>> eventosMutableLiveData;
 
-    public BuscaMedicamentoViewModel(@NonNull Application application) {
+    @Inject
+    public BuscaMedicamentoViewModel(@NonNull Application application,
+                                     MedicamentoRepository medicamentoRepository) {
         super(application);
-        medicamentoRepository = new MedicamentoRepository(application);
+        this.medicamentoRepository = medicamentoRepository;
+        this.loadingLiveData = new MutableLiveData<>(Boolean.FALSE);
+        this.eventosMutableLiveData = medicamentoRepository.getEventosMutableLiveData();
+        this.medicamentoLiveData = medicamentoRepository.getMedicamentoLiveData();
+        this.medicamentoListLiveData = medicamentoRepository.getMedicamentoListLiveData();
     }
 
     public void init() {
-        buscaResponseLiveData = medicamentoRepository.getBuscaResponseLiveData();
-        medicamentoResponseLiveData = medicamentoRepository.getMedicamentoResponseLiveData();
+        medicamentoLiveData.setValue(null);
+        medicamentoListLiveData.setValue(null);
     }
 
     public void buscarMedicamentos(String nome) {
+        loadingLiveData.setValue(Boolean.TRUE);
         medicamentoRepository.buscarMedicamentos(nome, 1);
     }
 
-    public void obterMedicamento(String numProcesso) {
-        medicamentoRepository.obterMedicamento(numProcesso);
+    public void onMedicamentoSelecionado(Medicamento medicamento) {
+        medicamentoRepository.salvarMedicamento(medicamento);
     }
 
-    public void salvarMedicamento(ContentResponse contentResponse) {
-        medicamentoRepository.insert(contentResponse);
+    public MutableLiveData<Medicamento> getMedicamentoLiveData() {
+        return medicamentoLiveData;
     }
 
-    public void atualizarMedicamento(MedicamentoResponse medicamentoResponse) {
-        medicamentoRepository.update(medicamentoResponse);
+    public MutableLiveData<List<Medicamento>> getMedicamentoListLiveData() {
+        return medicamentoListLiveData;
     }
 
-    public LiveData<BuscaResponse> getBuscaResponseLiveData() {
-        return buscaResponseLiveData;
+    public MutableLiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
     }
 
-    public LiveData<MedicamentoResponse> getMedicamentoResponseLiveData() {
-        return medicamentoResponseLiveData;
+    public MutableLiveData<Eventos<?>> getEventosMutableLiveData() {
+        return eventosMutableLiveData;
     }
 }

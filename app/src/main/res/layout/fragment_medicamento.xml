@@ -1,78 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="8dp"
-    android:orientation="vertical"
     tools:context=".view.MedicamentoFragment">
 
-    <TextView
-        android:id="@+id/ttv_nome_comercial"
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/contentLoadingProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMedicamento"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Nome Comercial" />
+        android:layout_margin="4dp"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/ttv_razao_social_cnpj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Razão Social/CNPJ"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/principio_ativo" />
-
-        <TextView
-            android:id="@+id/ttv_principio_ativo"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:text="Princípio Ativo" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textViewNomeComercial"
+                style="@style/TextAppearance.Material3.DisplaySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Nome Comercial" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/medicamento_referencia" />
+            <TextView
+                android:id="@+id/textViewRazaoSocial"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Razão Social - CNPJ" />
 
-        <TextView
-            android:id="@+id/ttv_medicamento_referencia"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:text="Medicamento Referência" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayoutPrincipioAtivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/principio_ativo" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/classe_terapeutica" />
+                <TextView
+                    android:id="@+id/textViewPrincipioAtivo"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Princípio Ativo" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/ttv_classe_terapeutica"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:text="Classe Terapêutica" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayoutMedicamentoReferencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_avancar"
+                <TextView
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/medicamento_referencia" />
+
+                <TextView
+                    android:id="@+id/textViewMedicamentoReferencia"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Medicamento Referência" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutClasseTerapeutica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/classe_terapeutica" />
+
+                <TextView
+                    android:id="@+id/textViewClasseTerapeutica"
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Classe Terapêutica" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonAvancar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/avancar" />
-</LinearLayout>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/botao_avancar"
+        android:src="@drawable/ic_baseline_navigate_next_24" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
