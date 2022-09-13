@@ -85,7 +85,14 @@ public class LembretesFragment extends Fragment implements LembretesAdapter.OnIt
 
         viewModel.getLembreteListLiveData().observe(getViewLifecycleOwner(),
                 lembreteList -> {
-                    if (lembreteList != null) {
+                    if (lembreteList == null) {
+                        binding.textViewSemLembrete.setVisibility(View.VISIBLE);
+                    } else {
+                        if (lembreteList.isEmpty()) {
+                            binding.textViewSemLembrete.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.textViewSemLembrete.setVisibility(View.GONE);
+                        }
                         adapter.submitList(lembreteList);
                     }
                 });

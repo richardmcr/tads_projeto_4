@@ -60,6 +60,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
         binding.floatingActionButtonBuscar.setOnClickListener(v -> {
             String busca = binding.textInputEditTextBusca.getEditableText().toString();
             viewModel.buscarMedicamentos(busca);
+            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
         });
 
         binding.textInputEditTextBusca.setOnEditorActionListener((v, actionId, event) -> {
@@ -68,6 +69,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
                     || actionId == EditorInfo.IME_ACTION_DONE) {
                 String busca = binding.textInputEditTextBusca.getEditableText().toString();
                 viewModel.buscarMedicamentos(busca);
+                binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
                 return true;
             }
             return false;
@@ -77,6 +79,11 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
                 buscaResponse -> {
                     viewModel.getLoadingLiveData().setValue(Boolean.FALSE);
                     if (buscaResponse != null) {
+                        if (buscaResponse.isEmpty()) {
+                            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
+                        }
                         adapter.submitList(buscaResponse);
                     }
                 });

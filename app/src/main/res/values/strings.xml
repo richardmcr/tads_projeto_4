@@ -46,4 +46,6 @@
     <string name="botao_hora_inicio_tratamento">Botão hora de início do tratamento</string>
     <string name="botao_avancar">Botão avançar</string>
     <string name="botao_salvar">Botão salvar</string>
+    <string name="sem_lembretes">Sem Lembretes</string>
+    <string name="medicamento_nao_encontrado">Medicamento não encontrado</string>
 </resources>

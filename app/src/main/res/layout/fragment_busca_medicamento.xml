@@ -57,4 +57,12 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewMedicamentoNaoEncontrato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/medicamento_nao_encontrado"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
