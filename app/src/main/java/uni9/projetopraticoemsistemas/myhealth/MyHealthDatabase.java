@@ -43,19 +43,22 @@ public abstract class MyHealthDatabase extends RoomDatabase {
                 MedicamentoEntity e1 = new MedicamentoEntity();
                 e1.setIdProduto(1L);
                 e1.setNomeProduto("Benegripe");
+                e1.setNumProcesso("1234");
                 myHealthDatabaseProvider.get().medicamentoDao().insert(e1);
                 MedicamentoEntity e2 = new MedicamentoEntity();
                 e2.setIdProduto(2L);
                 e2.setNomeProduto("Ibuprofeno");
+                e2.setNumProcesso("2345");
                 myHealthDatabaseProvider.get().medicamentoDao().insert(e2);
                 MedicamentoEntity e3 = new MedicamentoEntity();
                 e3.setIdProduto(3L);
                 e3.setNomeProduto("Neosaldina");
+                e3.setNumProcesso("3456");
                 myHealthDatabaseProvider.get().medicamentoDao().insert(e3);
 
-                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 1L, "detalhes do primeiro lembrete", System.currentTimeMillis() - 60000, 1L, 1L, true);
-                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 2L, "o segundo lembrete", System.currentTimeMillis() - 120000, 2L, 2L, true);
-                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 3L, "tomar 3 comprimidos ao dia", System.currentTimeMillis(), 3L, 3L, true);
+                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 1L, "detalhes do primeiro lembrete", System.currentTimeMillis() - 2 * 24 * 60 * 60 * 1000, 5L, 6L, true);
+                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 2L, "o segundo lembrete", System.currentTimeMillis() - 8 * 60 * 60 * 1000, 2L, 4L, true);
+                myHealthDatabaseProvider.get().lembreteDao().insert(1L, 3L, "tomar 3 comprimidos ao dia", System.currentTimeMillis() - 5 * 24 * 60 * 60 * 1000, 3L, 8L, true);
             });
         }
 
