@@ -90,7 +90,7 @@ public class LembreteRepository {
 
     public void getLembrete(Long id) {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
-            LembreteJoinMedicamento lembreteJoinMedicamento = lembreteDao.findLembreteById(id);
+            LembreteJoinMedicamento lembreteJoinMedicamento = lembreteDao.findLembreteById(id, System.currentTimeMillis());
             lembreteLiveData.postValue(lembreteMapper.lembreteJoinMedicamentoToLembrete(lembreteJoinMedicamento));
         });
     }

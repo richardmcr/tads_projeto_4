@@ -134,6 +134,7 @@ public class MedicamentoRepository {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
             MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(id);
             Lembrete lembrete = new Lembrete();
+            lembrete.setId(0L);
             lembrete.setMedicamento(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
             lembrete.setDataInicio(longDateToStringDate(System.currentTimeMillis()));
             lembrete.setHoraInicio(longDateToStringTime(System.currentTimeMillis()));

@@ -58,10 +58,6 @@ public class LembretesViewModel extends AndroidViewModel {
         return lembreteListLiveData;
     }
 
-    public void onLembreteSelecionado(Lembrete lembrete) {
-
-    }
-
     public void onLembreteSwiped(Lembrete lembrete) {
         lembreteRepository.removerLembrete(lembrete);
         lembreteEventoLiveData.postValue(new Eventos.LembreteRemovido(lembrete));

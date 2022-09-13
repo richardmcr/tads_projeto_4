@@ -58,11 +58,13 @@ public interface LembreteDao {
             "         ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END ASC")
     List<LembreteJoinMedicamento> findAllLembretesByIdUsuarioAndMedicamentoSortedByProximaDose(Long idUsuario, String medicamento, Long data);
 
-    @Query("SELECT * \n" +
+    @Query("SELECT *, \n" +
+            "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
+            "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
             "FROM lembrete \n" +
             "INNER JOIN medicamento ON medicamento.idProduto = lembrete.idMedicamento \n" +
             "WHERE lembrete.id = :id ")
-    LembreteJoinMedicamento findLembreteById(Long id);
+    LembreteJoinMedicamento findLembreteById(Long id, Long data);
 
     @Query("INSERT INTO lembrete (idUsuario, idMedicamento, detalhes, dataInicio, duracao, intervalo, alertas) " +
             "VALUES(:idUsuario, :idMedicamento, :detalhes, :dataInicio, :duracao, :intervalo, :alertas)")

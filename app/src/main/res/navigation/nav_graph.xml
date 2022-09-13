@@ -31,6 +31,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_lembretesFragment_to_lembreteFragment"
+            app:destination="@id/lembreteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -59,8 +66,8 @@
             android:name="processo"
             app:argType="java.lang.String" />
         <action
-            android:id="@+id/action_medicamentoFragment_to_novoLembreteFragment"
-            app:destination="@id/novoLembreteFragment"
+            android:id="@+id/action_medicamentoFragment_to_lembreteFragment"
+            app:destination="@id/lembreteFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -68,7 +75,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/novoLembreteFragment"
+        android:id="@+id/lembreteFragment"
         android:name="uni9.projetopraticoemsistemas.myhealth.view.LembreteFragment"
         android:label="@string/lembrete"
         tools:layout="@layout/fragment_lembrete" >
@@ -77,7 +84,6 @@
             app:argType="long" />
         <argument
             android:name="idLembrete"
-            app:argType="long"
-            android:defaultValue="0L" />
+            app:argType="long" />
     </fragment>
 </navigation>

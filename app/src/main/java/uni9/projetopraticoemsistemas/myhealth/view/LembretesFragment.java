@@ -55,7 +55,7 @@ public class LembretesFragment extends Fragment implements LembretesAdapter.OnIt
 
     @Override
     public void onItemClick(Lembrete lembrete) {
-        viewModel.onLembreteSelecionado(lembrete);
+        Navigation.findNavController(requireView()).navigate(LembretesFragmentDirections.actionLembretesFragmentToLembreteFragment(lembrete.getMedicamento().getId(), lembrete.getId()));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LembretesFragment extends Fragment implements LembretesAdapter.OnIt
                             viewModel.eventoCompleto();
                         } else if (eventos instanceof Eventos.NovoLembrete) {
                             Navigation.findNavController(view).navigate(LembretesFragmentDirections.actionLembretesFragmentToBuscaMedicamentoFragment());
-                        } else if (eventos instanceof  Eventos.LembretesCompletosRemovidos){
+                        } else if (eventos instanceof Eventos.LembretesCompletosRemovidos) {
                             Snackbar.make(requireView(), getString(R.string.lembretes_removido), Snackbar.LENGTH_LONG).show();
                         }
                     }

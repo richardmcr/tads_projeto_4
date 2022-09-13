@@ -64,7 +64,7 @@ public class MedicamentoFragment extends Fragment {
                     binding.textViewClasseTerapeutica.setText(medicamento.getClassesTerapeuticas());
                 }
 
-                binding.floatingActionButtonAvancar.setOnClickListener(v -> Navigation.findNavController(v).navigate(MedicamentoFragmentDirections.actionMedicamentoFragmentToNovoLembreteFragment(medicamento.getId())));
+                binding.floatingActionButtonAvancar.setOnClickListener(v -> Navigation.findNavController(v).navigate(MedicamentoFragmentDirections.actionMedicamentoFragmentToLembreteFragment(medicamento.getId(), 0L)));
 
                 viewModel.getLoadingLiveData().postValue(Boolean.FALSE);
             }

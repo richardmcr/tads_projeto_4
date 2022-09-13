@@ -58,33 +58,6 @@ public class LembreteFragment extends Fragment {
                 viewModel.setDetalhes(s.toString());
             }
         });
-        binding.imageButtonDataInicioTratamento.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            if (!Objects.isNull(viewModel.getInicioLiveData().getValue())) {
-                c.setTime(new Date(Objects.requireNonNull(viewModel.getInicioLiveData().getValue())));
-            }
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
-                    (t, year, monthOfYear, dayOfMonth) -> {
-                        c.set(Calendar.YEAR, year);
-                        c.set(Calendar.MONTH, monthOfYear);
-                        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        viewModel.setInicio(c.getTime().getTime());
-                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
-        });
-        binding.imageButtonHoraInicioTratamento.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            if (!Objects.isNull(viewModel.getInicioLiveData().getValue())) {
-                c.setTime(new Date(Objects.requireNonNull(viewModel.getInicioLiveData().getValue())));
-            }
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
-                    (t, hourOfDay, minute) -> {
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-                        viewModel.setInicio(c.getTime().getTime());
-                    }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
-            timePickerDialog.show();
-        });
         binding.textInputEditTextDuracaoTratamento.addTextChangedListener(new CustomTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -100,10 +73,45 @@ public class LembreteFragment extends Fragment {
             }
         });
         binding.switchAlertas.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.setAlertas(isChecked));
-        binding.floatingActionButtonSalvar.setOnClickListener(v -> viewModel.inserirLembrete());
 
         viewModel.getLembreteLiveData().observe(getViewLifecycleOwner(), lembrete -> {
             if (lembrete != null) {
+                if (lembrete.getId() == 0L) {
+                    binding.imageButtonDataInicioTratamento.setOnClickListener(v -> {
+                        final Calendar c = Calendar.getInstance();
+                        if (!Objects.isNull(viewModel.getInicioLiveData().getValue())) {
+                            c.setTime(new Date(Objects.requireNonNull(viewModel.getInicioLiveData().getValue())));
+                        }
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                                (t, year, monthOfYear, dayOfMonth) -> {
+                                    c.set(Calendar.YEAR, year);
+                                    c.set(Calendar.MONTH, monthOfYear);
+                                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                    viewModel.setInicio(c.getTime().getTime());
+                                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                        datePickerDialog.show();
+                    });
+                    binding.imageButtonHoraInicioTratamento.setOnClickListener(v -> {
+                        final Calendar c = Calendar.getInstance();
+                        if (!Objects.isNull(viewModel.getInicioLiveData().getValue())) {
+                            c.setTime(new Date(Objects.requireNonNull(viewModel.getInicioLiveData().getValue())));
+                        }
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                                (t, hourOfDay, minute) -> {
+                                    c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                    c.set(Calendar.MINUTE, minute);
+                                    viewModel.setInicio(c.getTime().getTime());
+                                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true);
+                        timePickerDialog.show();
+                    });
+                    binding.floatingActionButtonSalvar.setOnClickListener(v -> viewModel.inserirLembrete());
+                } else {
+                    binding.textInputEditTextDetalhes.setEnabled(Boolean.FALSE);
+                    binding.textInputEditTextDuracaoTratamento.setEnabled(Boolean.FALSE);
+                    binding.textInputEditTextIntervalo.setEnabled(Boolean.FALSE);
+                    binding.switchAlertas.setEnabled(Boolean.FALSE);
+                    binding.floatingActionButtonSalvar.setOnClickListener(v -> Navigation.findNavController(view).popBackStack(R.id.lembretesFragment, false));
+                }
                 binding.textInputEditTextMedicamento.setText(lembrete.getMedicamento().getNome());
                 binding.textInputEditTextDetalhes.setText(lembrete.getDetalhes());
                 binding.textInputEditTextDataInicioTratamento.setText(lembrete.getDataInicio());
