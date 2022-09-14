@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import uni9.projetopraticoemsistemas.myhealth.LembreteRepository;
 import uni9.projetopraticoemsistemas.myhealth.MedicamentoRepository;
-import uni9.projetopraticoemsistemas.myhealth.R;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.model.Lembrete;
 
@@ -79,16 +78,14 @@ public class LembreteViewModel extends AndroidViewModel {
     }
 
     public void inserirLembrete() {
-        if (Objects.isNull(detalhesLiveData.getValue()) || Objects.requireNonNull(detalhesLiveData.getValue()).isEmpty()) {
-            enviarMensagemErro(getApplication().getString(R.string.erro_campo_vazio, getApplication().getString(R.string.detalhes)));
-        } else if (Objects.isNull(duracaoLiveData.getValue())) {
-            enviarMensagemErro(getApplication().getString(R.string.erro_campo_vazio, getApplication().getString(R.string.duracao)));
+        if (Objects.isNull(duracaoLiveData.getValue())) {
+            onErroDeValidacao("duracao");
         } else if (Objects.requireNonNull(duracaoLiveData.getValue()) <= 0) {
-            enviarMensagemErro(getApplication().getString(R.string.erro_campo_negativo, getApplication().getString(R.string.duracao)));
+            onErroDeValidacao("duracao_negativa");
         } else if (Objects.isNull(intervaloLiveData.getValue())) {
-            enviarMensagemErro(getApplication().getString(R.string.erro_campo_vazio, getApplication().getString(R.string.intervalo)));
+            onErroDeValidacao("intervalo");
         } else if (Objects.requireNonNull(intervaloLiveData.getValue()) <= 0) {
-            enviarMensagemErro(getApplication().getString(R.string.erro_campo_negativo, getApplication().getString(R.string.intervalo)));
+            onErroDeValidacao("intervalo_negativo");
         } else {
             Lembrete novoLembrete = lembreteMediator.getValue();
             assert novoLembrete != null;
@@ -109,8 +106,8 @@ public class LembreteViewModel extends AndroidViewModel {
         }
     }
 
-    private void enviarMensagemErro(String mesnsagem) {
-        eventoLiveData.postValue(new Eventos.MensagemErro(mesnsagem));
+    private void onErroDeValidacao(String erro) {
+        eventoLiveData.postValue(new Eventos.ErroValidacao(erro));
     }
 
     public void setDetalhes(String detalhes) {

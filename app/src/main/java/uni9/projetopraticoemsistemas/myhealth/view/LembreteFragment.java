@@ -135,6 +135,25 @@ public class LembreteFragment extends Fragment {
             if (!Objects.isNull(evento)) {
                 if (evento instanceof Eventos.MensagemErro) {
                     Snackbar.make(requireView(), ((Eventos.MensagemErro) evento).getData(), Snackbar.LENGTH_LONG).show();
+                } else if (evento instanceof Eventos.ErroValidacao) {
+                    switch(((Eventos.ErroValidacao) evento).getData()){
+                        case "duracao":
+                            binding.textInputEditTextDuracaoTratamento.setError(getString(R.string.erro_campo_vazio, getString(R.string.duracao)));
+                            Snackbar.make(requireView(), getString(R.string.erro_campo_vazio, getString(R.string.duracao)), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case "duracao_negativa":
+                            binding.textInputEditTextDuracaoTratamento.setError(getString(R.string.erro_campo_negativo, getString(R.string.duracao)));
+                            Snackbar.make(requireView(), getString(R.string.erro_campo_negativo, getString(R.string.duracao)), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case "intervalo":
+                            binding.textInputEditTextIntervalo.setError(getString(R.string.erro_campo_vazio, getString(R.string.intervalo)));
+                            Snackbar.make(requireView(), getString(R.string.erro_campo_vazio, getString(R.string.intervalo)), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case "intervalo_negativo":
+                            binding.textInputEditTextIntervalo.setError(getString(R.string.erro_campo_negativo, getString(R.string.intervalo)));
+                            Snackbar.make(requireView(), getString(R.string.erro_campo_negativo, getString(R.string.intervalo)), Snackbar.LENGTH_LONG).show();
+                            break;
+                    }
                 } else if (evento instanceof Eventos.LembreteSalvo) {
                     Bundle result = new Bundle();
                     result.putInt("lembrete_salvo", ((Eventos.LembreteSalvo) evento).getData());

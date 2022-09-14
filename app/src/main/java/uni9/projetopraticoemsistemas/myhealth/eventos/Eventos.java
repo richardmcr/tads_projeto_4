@@ -49,4 +49,10 @@ public abstract class Eventos<T> {
             super(null);
         }
     }
+
+    public final static class ErroValidacao extends Eventos<String> {
+        public ErroValidacao(String erro) {
+            super(erro);
+        }
+    }
 }
