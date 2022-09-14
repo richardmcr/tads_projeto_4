@@ -1,91 +1,127 @@
 package uni9.projetopraticoemsistemas.myhealth.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 import uni9.projetopraticoemsistemas.myhealth.R;
-import uni9.projetopraticoemsistemas.myhealth.adapters.BuscaMedicamentoResultsAdapter;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.BuscaResponse;
-import uni9.projetopraticoemsistemas.myhealth.model.dto.ContentResponse;
+import uni9.projetopraticoemsistemas.myhealth.adapters.MedicamentoAdapter;
+import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentBuscaMedicamentoBinding;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.model.Medicamento;
 import uni9.projetopraticoemsistemas.myhealth.viewmodel.BuscaMedicamentoViewModel;
 
-public class BuscaMedicamentosFragment extends Fragment {
-    
+public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAdapter.OnItemClickListener {
+
     private BuscaMedicamentoViewModel viewModel;
-    private BuscaMedicamentoResultsAdapter adapter;
-
-    private TextInputEditText tietBusca;
-    private Button btnBuscar;
+    private FragmentBuscaMedicamentoBinding binding;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = FragmentBuscaMedicamentoBinding.inflate(inflater, container, false);
 
-        adapter = new BuscaMedicamentoResultsAdapter(new BuscaMedicamentoResultsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ContentResponse item) {
-                Log.d("LOG_BuscaMedicamentos", item.toString());
-                salvarMedicamento(item);
-                obterMedicamento(item.getNumProcesso());
-            }
-        });
+        viewModel = new ViewModelProvider(requireActivity()).get(BuscaMedicamentoViewModel.class);
 
-        viewModel = new ViewModelProvider(this).get(BuscaMedicamentoViewModel.class);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onItemClick(Medicamento medicamento) {
+        viewModel.onMedicamentoSelecionado(medicamento);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         viewModel.init();
-        viewModel.getBuscaResponseLiveData().observe(this, new Observer<BuscaResponse>() {
-            @Override
-            public void onChanged(BuscaResponse buscaResponse) {
-                if (buscaResponse != null) {
-                    adapter.setResults(buscaResponse.getContentResponse());
-                }
-            }
+
+        MedicamentoAdapter adapter = new MedicamentoAdapter(this);
+
+        binding.recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recyclerViewMedicamentos.setAdapter(adapter);
+        binding.recyclerViewMedicamentos.setHasFixedSize(true);
+
+        binding.floatingActionButtonBuscar.setOnClickListener(v -> {
+            String busca = binding.textInputEditTextBusca.getEditableText().toString();
+            viewModel.buscarMedicamentos(busca);
+            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
         });
-    }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_busca_medicamento, container, false);
+        binding.textInputEditTextBusca.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED
+                    || actionId == EditorInfo.IME_ACTION_GO
+                    || actionId == EditorInfo.IME_ACTION_DONE) {
+                String busca = binding.textInputEditTextBusca.getEditableText().toString();
+                viewModel.buscarMedicamentos(busca);
+                binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
+                return true;
+            }
+            return false;
+        });
 
-        RecyclerView recyclerView = view.findViewById(R.id.rv_medicamentos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        viewModel.getMedicamentoListLiveData().observe(getViewLifecycleOwner(),
+                buscaResponse -> {
+                    viewModel.getLoadingLiveData().setValue(Boolean.FALSE);
+                    if (buscaResponse != null) {
+                        if (buscaResponse.isEmpty()) {
+                            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.textViewMedicamentoNaoEncontrato.setVisibility(View.GONE);
+                        }
+                        adapter.submitList(buscaResponse);
+                    }
+                });
 
+        viewModel.getMedicamentoLiveData().observe(getViewLifecycleOwner(),
+                medicamento -> {
+                    if (medicamento != null) {
+                        Navigation.findNavController(requireView())
+                                .navigate(BuscaMedicamentosFragmentDirections.actionBuscaMedicamentoFragmentToMedicamentoFragment(medicamento.getId(), medicamento.getProcesso()));
+                    }
+                });
 
-        tietBusca = view.findViewById(R.id.tiet_busca);
-        btnBuscar = view.findViewById(R.id.btn_buscar);
+        viewModel.getLoadingLiveData().observe(getViewLifecycleOwner(),
+                isLoading -> {
+                    if (isLoading) binding.contentLoadingProgressBar.setVisibility(View.VISIBLE);
+                    else binding.contentLoadingProgressBar.setVisibility(View.GONE);
+                });
 
-        btnBuscar.setOnClickListener(v -> buscarMedicamentos());
-
-        return view;
-    }
-
-    public void buscarMedicamentos() {
-        String nome = tietBusca.getEditableText().toString();
-
-        viewModel.buscarMedicamentos(nome);
-    }
-
-    public void obterMedicamento(String numProcesso) {
-        viewModel.obterMedicamento(numProcesso);
-    }
-
-    public void salvarMedicamento(ContentResponse item){
-        viewModel.salvarMedicamento(item);
+        viewModel.getEventosMutableLiveData().observe(getViewLifecycleOwner(),
+                evento -> {
+                    if (!Objects.isNull(evento)) {
+                        if (evento instanceof Eventos.MensagemErro) {
+                            String mensagem = ((Eventos.MensagemErro) evento).getData();
+                            switch (mensagem) {
+                                case "erro_conexao":
+                                    Snackbar.make(requireView(), getString(R.string.erro_conexao), Snackbar.LENGTH_LONG).show();
+                                    break;
+                                case "resultados_offline":
+                                    Snackbar.make(requireView(), getString(R.string.resultados_offline), Snackbar.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Snackbar.make(requireView(), mensagem, Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                        viewModel.getEventosMutableLiveData().setValue(null);
+                    }
+                }
+        );
     }
 
 }

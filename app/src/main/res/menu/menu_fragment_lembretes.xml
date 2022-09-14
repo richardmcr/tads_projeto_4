@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemBuscar"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/buscar"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:icon="@drawable/ic_baseline_sort_24"
+        android:title="@string/ordenar"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/itemOrdenarMedicamento"
+                android:title="@string/ordenar_por_medicamento" />
+            <item
+                android:id="@+id/itemOrdenarData"
+                android:title="@string/ordenar_por_data" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/itemOcultarCompletos"
+        android:title="@string/ocultar_completos"
+        android:checkable="true"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/itemApagarCompletos"
+        android:title="@string/apagar_completos"
+        app:showAsAction="never"/>
+</menu>
