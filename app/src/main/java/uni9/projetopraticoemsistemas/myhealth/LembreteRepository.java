@@ -2,8 +2,6 @@ package uni9.projetopraticoemsistemas.myhealth;
 
 import static uni9.projetopraticoemsistemas.myhealth.helper.DateFormatter.stringDateTimeTolong;
 
-import android.util.Log;
-
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -70,18 +68,14 @@ public class LembreteRepository {
         List<LembreteJoinMedicamento> lembreteEntityList;
         if (ordenacaoLiveData.getValue() == Ordenacao.BY_DATA) {
             if (Boolean.TRUE.equals(ocultarCompletosLiveData.getValue())) {
-                Log.d("CONSULTA", "findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByProximaDose");
                 lembreteEntityList = lembreteDao.findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByProximaDose(usuarioLiveData.getValue(), medicamentoLiveData.getValue(), System.currentTimeMillis());
             } else {
-                Log.d("CONSULTA", "findAllLembretesByIdUsuarioAndMedicamentoSortedByProximaDose");
                 lembreteEntityList = lembreteDao.findAllLembretesByIdUsuarioAndMedicamentoSortedByProximaDose(usuarioLiveData.getValue(), medicamentoLiveData.getValue(), System.currentTimeMillis());
             }
         } else {
             if (Boolean.TRUE.equals(ocultarCompletosLiveData.getValue())) {
-                Log.d("CONSULTA", "findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto");
                 lembreteEntityList = lembreteDao.findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto(usuarioLiveData.getValue(), medicamentoLiveData.getValue(), System.currentTimeMillis());
             } else {
-                Log.d("CONSULTA", "findAllLembretesByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto");
                 lembreteEntityList = lembreteDao.findAllLembretesByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto(usuarioLiveData.getValue(), medicamentoLiveData.getValue(), System.currentTimeMillis());
             }
         }
