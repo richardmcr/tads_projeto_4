@@ -111,12 +111,12 @@ public class MedicamentoRepository {
                                 Medicamento medicamento = medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity);
                                 medicamentoLiveData.postValue(medicamento);
                             });
-
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<MedicamentoResponse> call, @NonNull Throwable t) {
+                        medicamentoLiveData.postValue(null);
                         eventosMutableLiveData.postValue(new Eventos.MensagemErro("erro_conexao"));
                     }
                 });
@@ -128,7 +128,6 @@ public class MedicamentoRepository {
             if (Objects.isNull(medicamentoEntity)
                     || Objects.isNull(medicamentoEntity.getNomeComercial())) {
                 obterMedicamento(idMedicamento, processo);
-                eventosMutableLiveData.postValue(new Eventos.MensagemErro("resultados_offline"));
             } else {
                 medicamentoLiveData.postValue(medicamentoMapper.medicamentoEntityToMedicamento(medicamentoEntity));
             }

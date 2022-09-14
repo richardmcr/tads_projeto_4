@@ -90,6 +90,7 @@ public class MedicamentoFragment extends Fragment {
                             String mensagem = ((Eventos.MensagemErro) evento).getData();
                             switch (mensagem) {
                                 case "erro_conexao":
+                                    viewModel.getLoadingLiveData().postValue(Boolean.FALSE);
                                     Snackbar.make(requireView(), getString(R.string.erro_conexao), Snackbar.LENGTH_LONG).show();
                                     break;
                                 case "resultados_offline":
