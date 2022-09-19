@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary_50">#ffebee</color>
     <color name="primary_200">#ef9a9a</color>
     <color name="primary_500">#f44336</color>
     <color name="primary_700">#d32f2f</color>
+    <color name="secondary_50">#e3f2fd</color>
     <color name="secondary_200">#90caf9</color>
     <color name="secondary_700">#1976d2</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#f7f7f7</color>
 </resources>
