@@ -3,7 +3,7 @@
     <string name="medicamento">Medicamento</string>
     <string name="buscar">Buscar</string>
     <string name="salvar">Salvar</string>
-    <string name="inicio_tratamento">Início do tratamento</string>
+    <string name="inicio_tratamento">Início do Tratamento</string>
     <string name="duracao">Duração (em dias)</string>
     <string name="intervalo">Intervalo (em horas)</string>
     <string name="alertas">Alertas</string>
@@ -64,4 +64,10 @@
     <string name="sair">Sair</string>
     <string name="logout_sucesso">Logout efeutado com sucesso!</string>
     <string name="bem_vindo">Bem vindo, %1$s!</string>
+    <string name="nascimento">Data de Nascimento</string>
+    <string name="genero">Gênero</string>
+    <string name="tipo_sanguineo">Tipo Sanguíneo</string>
+    <string name="peso">Peso (em kg)</string>
+    <string name="botao_data_nascimento">Botão data de nascimento</string>
+    <string name="altura">Altura (em metros)</string>
 </resources>
