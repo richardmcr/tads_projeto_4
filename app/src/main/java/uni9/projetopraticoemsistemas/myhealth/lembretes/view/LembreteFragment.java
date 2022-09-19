@@ -76,7 +76,7 @@ public class LembreteFragment extends Fragment {
         binding.switchAlertas.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.setAlertas(isChecked));
 
         viewModel.getLembreteLiveData().observe(getViewLifecycleOwner(), lembrete -> {
-            if (lembrete != null) {
+            if ((!Objects.isNull(lembrete))) {
                 if (lembrete.getId() == 0L) {
                     binding.imageButtonDataInicioTratamento.setOnClickListener(v -> {
                         final Calendar c = Calendar.getInstance();

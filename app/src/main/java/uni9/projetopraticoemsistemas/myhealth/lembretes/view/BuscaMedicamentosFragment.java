@@ -78,7 +78,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
         viewModel.getMedicamentoListLiveData().observe(getViewLifecycleOwner(),
                 buscaResponse -> {
                     viewModel.getLoadingLiveData().setValue(Boolean.FALSE);
-                    if (buscaResponse != null) {
+                    if (!Objects.isNull(buscaResponse)) {
                         if (buscaResponse.isEmpty()) {
                             binding.textViewMedicamentoNaoEncontrato.setVisibility(View.VISIBLE);
                         } else {
@@ -90,7 +90,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
 
         viewModel.getMedicamentoLiveData().observe(getViewLifecycleOwner(),
                 medicamento -> {
-                    if (medicamento != null) {
+                    if (!Objects.isNull(medicamento)) {
                         Navigation.findNavController(requireView())
                                 .navigate(BuscaMedicamentosFragmentDirections.actionBuscaMedicamentoFragmentToMedicamentoFragment(medicamento.getId(), medicamento.getProcesso()));
                     }

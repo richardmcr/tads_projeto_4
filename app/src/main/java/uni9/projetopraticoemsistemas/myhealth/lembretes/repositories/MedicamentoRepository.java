@@ -65,11 +65,11 @@ public class MedicamentoRepository {
 
     public void buscarMedicamentos(String nome, Integer pagina) {
         buscaMedicamentoService.buscarMedicamentos(nome, pagina)
-                .enqueue(new Callback<BuscaResponse>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<BuscaResponse> call, @NonNull Response<BuscaResponse> response) {
-                        if (response.body() != null) {
-                            medicamentoListLiveData.postValue(medicamentoMapper.contentResponseToMedicamentos(response.body().getContentResponse()));
+                        if (!Objects.isNull(response.body())) {
+                            medicamentoListLiveData.postValue(medicamentoMapper.contentResponseToMedicamentos(Objects.requireNonNull(response.body()).getContentResponse()));
                         }
                     }
 
@@ -100,10 +100,10 @@ public class MedicamentoRepository {
 
     public void obterMedicamento(Long idMedicamento, String processo) {
         buscaMedicamentoService.obterMedicamento(processo)
-                .enqueue(new Callback<MedicamentoResponse>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<MedicamentoResponse> call, @NonNull Response<MedicamentoResponse> response) {
-                        if (response.body() != null) {
+                        if (!Objects.isNull(response.body())) {
                             MyHealthDatabase.databaseWriteExecutor.execute(() -> {
                                 MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(idMedicamento);
                                 medicamentoMapper.updateMedicamentoEntityFromMedicamentoResponse(response.body(), medicamentoEntity);

@@ -44,7 +44,7 @@ public class MedicamentoFragment extends Fragment {
 
         viewModel.init();
         viewModel.getMedicamentoLiveData().observe(getViewLifecycleOwner(), medicamento -> {
-            if (medicamento != null) {
+            if (!Objects.isNull(medicamento)) {
                 binding.textViewNomeComercial.setText(medicamento.getNomeComercial());
                 binding.textViewRazaoSocial.setText(getString(R.string.razao_social_cnpj, medicamento.getRazaoSocial(), medicamento.getCnpj()));
 
