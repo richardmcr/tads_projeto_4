@@ -11,20 +11,24 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import uni9.projetopraticoemsistemas.myhealth.apis.LembreteDao;
-import uni9.projetopraticoemsistemas.myhealth.apis.MedicamentoDao;
-import uni9.projetopraticoemsistemas.myhealth.model.entity.LembreteEntity;
-import uni9.projetopraticoemsistemas.myhealth.model.entity.MedicamentoEntity;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.LembreteDao;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.MedicamentoDao;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.LembreteEntity;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.MedicamentoEntity;
+import uni9.projetopraticoemsistemas.myhealth.login.apis.UsuarioDao;
+import uni9.projetopraticoemsistemas.myhealth.login.model.entity.UsuarioEntity;
 
-@Database(entities = {MedicamentoEntity.class, LembreteEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {MedicamentoEntity.class, LembreteEntity.class, UsuarioEntity.class}, version = 1, exportSchema = false)
 public abstract class MyHealthDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract MedicamentoDao medicamentoDao();
 
     public abstract LembreteDao lembreteDao();
+
+    public abstract UsuarioDao usuarioDao();
 
     public static class Callback extends RoomDatabase.Callback {
 
@@ -40,6 +44,12 @@ public abstract class MyHealthDatabase extends RoomDatabase {
             super.onCreate(db);
 
             MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+                UsuarioEntity u = new UsuarioEntity();
+                u.setEmail("email@teste.com");
+                u.setSenha("1234");
+                u.setNome("Usuário 1");
+                myHealthDatabaseProvider.get().usuarioDao().insert(u.getNome(), u.getEmail(), u.getSenha());
+
                 MedicamentoEntity e1 = new MedicamentoEntity();
                 e1.setIdProduto(750563L);
                 e1.setNomeProduto("BENEGRIP");

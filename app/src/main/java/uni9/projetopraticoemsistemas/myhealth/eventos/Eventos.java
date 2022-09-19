@@ -1,6 +1,9 @@
 package uni9.projetopraticoemsistemas.myhealth.eventos;
 
-import uni9.projetopraticoemsistemas.myhealth.model.Lembrete;
+import androidx.annotation.NonNull;
+
+import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
+import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
 
 public abstract class Eventos<T> {
 
@@ -12,6 +15,15 @@ public abstract class Eventos<T> {
 
     public T getData() {
         return data;
+    }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Eventos{" +
+                "evento='" + this.getClass().getSimpleName() + "', " +
+                "data=" + data +
+                '}';
     }
 
     public final static class LembreteRemovido extends Eventos<Lembrete> {
@@ -53,6 +65,24 @@ public abstract class Eventos<T> {
     public final static class ErroValidacao extends Eventos<String> {
         public ErroValidacao(String erro) {
             super(erro);
+        }
+    }
+
+    public final static class UsuarioSalvo<T> extends Eventos<T> {
+        public UsuarioSalvo() {
+            super(null);
+        }
+    }
+
+    public final static class UsuarioLogado extends Eventos<Usuario> {
+        public UsuarioLogado(Usuario usuario) {
+            super(usuario);
+        }
+    }
+
+    public static class Logout<T> extends Eventos<T> {
+        public Logout() {
+            super(null);
         }
     }
 }

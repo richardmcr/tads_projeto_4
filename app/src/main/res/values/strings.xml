@@ -48,4 +48,20 @@
     <string name="botao_salvar">Botão salvar</string>
     <string name="sem_lembretes">Sem Lembretes</string>
     <string name="medicamento_nao_encontrado">Medicamento não encontrado</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="imagem_logo">Imagem com o logo</string>
+    <string name="novo_usuario">Novo Usuário</string>
+    <string name="nome">Nome</string>
+    <string name="confirmar_senha">Confirmar senha</string>
+    <string name="erro_email_invalido">O email digitado não é válido!</string>
+    <string name="erro_email_existente">O email digitado já existe na base de dados!</string>
+    <string name="erro_senha_curta">A senha precisa ter 6 dígitos!</string>
+    <string name="senhas_diferentes">As senhas digitadas são diferentes!</string>
+    <string name="novo_usuario_criado">Usuário criado com sucesso!</string>
+    <string name="usuario_nao_encontrado">Usuário não encontrado</string>
+    <string name="senha_errada">Senha errada</string>
+    <string name="sair">Sair</string>
+    <string name="logout_sucesso">Logout efeutado com sucesso!</string>
+    <string name="bem_vindo">Bem vindo, %1$s!</string>
 </resources>

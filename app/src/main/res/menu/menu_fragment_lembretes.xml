@@ -11,7 +11,7 @@
     <item
         android:icon="@drawable/ic_baseline_sort_24"
         android:title="@string/ordenar"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
         <menu>
             <item
                 android:id="@+id/itemOrdenarMedicamento"
