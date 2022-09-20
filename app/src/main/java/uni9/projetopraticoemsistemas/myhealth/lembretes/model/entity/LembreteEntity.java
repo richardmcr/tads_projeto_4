@@ -28,8 +28,10 @@ public class LembreteEntity {
     @PrimaryKey(autoGenerate = true)
     private Long id;
 
+    @ColumnInfo(index = true)
     private Long idUsuario;
 
+    @ColumnInfo(index = true)
     private Long idMedicamento;
 
     private String detalhes;

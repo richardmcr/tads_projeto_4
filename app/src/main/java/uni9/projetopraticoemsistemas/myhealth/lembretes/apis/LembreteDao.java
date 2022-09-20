@@ -3,6 +3,7 @@ package uni9.projetopraticoemsistemas.myhealth.lembretes.apis;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.LembreteJoi
 @Dao
 public interface LembreteDao {
 
+    @Transaction
     @Query("SELECT *, \n" +
             "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
             "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
@@ -23,6 +25,7 @@ public interface LembreteDao {
             "ORDER BY medicamento.nomeProduto ASC")
     List<LembreteJoinMedicamento> findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto(Long idUsuario, String medicamento, Long data);
 
+    @Transaction
     @Query("SELECT *, \n" +
             "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
             "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
@@ -34,6 +37,7 @@ public interface LembreteDao {
             "   medicamento.nomeProduto ASC")
     List<LembreteJoinMedicamento> findAllLembretesByIdUsuarioAndMedicamentoSortedByMedicamentoNomeProduto(Long idUsuario, String medicamento, Long data);
 
+    @Transaction
     @Query("SELECT *, \n" +
             "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
             "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
@@ -46,6 +50,7 @@ public interface LembreteDao {
             "         ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END ASC")
     List<LembreteJoinMedicamento> findAllLembretesCompletosByIdUsuarioAndMedicamentoSortedByProximaDose(Long idUsuario, String medicamento, Long data);
 
+    @Transaction
     @Query("SELECT *, \n" +
             "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
             "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
@@ -58,6 +63,7 @@ public interface LembreteDao {
             "         ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END ASC")
     List<LembreteJoinMedicamento> findAllLembretesByIdUsuarioAndMedicamentoSortedByProximaDose(Long idUsuario, String medicamento, Long data);
 
+    @Transaction
     @Query("SELECT *, \n" +
             "CASE WHEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) > (:data) THEN (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo) * lembrete.intervalo * 3600000 + lembrete.dataInicio) \n" +
             "ELSE (((:data - lembrete.dataInicio)/3600000/lembrete.intervalo+1) * lembrete.intervalo * 3600000 + lembrete.dataInicio) END proximaDose \n" +
