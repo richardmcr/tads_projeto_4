@@ -45,7 +45,7 @@ public class UsuarioRepository {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
             UsuarioEntity usuarioEntity = usuarioDao.findUsuarioByEmail(email);
             Usuario usuario = usuarioMapper.usuarioEntityToUsuario(usuarioEntity);
-            if(Objects.isNull(usuario)){
+            if (Objects.isNull(usuario)) {
                 usuario = new Usuario();
                 usuario.setId(-1L);
             }

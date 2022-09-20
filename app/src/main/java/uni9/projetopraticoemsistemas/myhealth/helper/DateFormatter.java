@@ -7,23 +7,23 @@ import java.util.Objects;
 
 public class DateFormatter {
 
-    public static String longDateToStringDateTime(Long date){
+    public static String longDateToStringDateTime(Long date) {
         return Objects.isNull(date) ? null : new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(new Date(date));
     }
 
-    public static String longDateToStringTimeDate(Long date){
+    public static String longDateToStringTimeDate(Long date) {
         return Objects.isNull(date) ? null : new SimpleDateFormat(" HH:mm - dd/MM/yyyy", Locale.getDefault()).format(new Date(date));
     }
 
-    public static String longDateToStringDate(Long date){
+    public static String longDateToStringDate(Long date) {
         return Objects.isNull(date) ? null : new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date(date));
     }
 
-    public static String longDateToStringTime(Long date){
+    public static String longDateToStringTime(Long date) {
         return Objects.isNull(date) ? null : new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(date));
     }
 
-    public static Long stringDateTimeTolong(String dateTime){
+    public static Long stringDateTimeTolong(String dateTime) {
         try {
             return Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse(dateTime)).getTime();
         } catch (Exception e) {

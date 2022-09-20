@@ -9,7 +9,7 @@ public class ListMapper {
 
     public List<String> asListString(String string) {
         List<String> list = new ArrayList<>();
-        if(Objects.isNull(string))
+        if (Objects.isNull(string))
             return list;
 
         Collections.addAll(list, string.split(";"));
@@ -19,7 +19,7 @@ public class ListMapper {
     public String asString(List<String> list) {
         StringBuilder sb = new StringBuilder();
 
-        for(String string : list){
+        for (String string : list) {
             sb.append(string).append(";");
         }
 

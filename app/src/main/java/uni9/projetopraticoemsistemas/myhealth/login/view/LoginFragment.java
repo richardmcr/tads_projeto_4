@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment implements FragmentResultListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Toast.makeText(getContext(), "Voltar pra onde?", Toast.LENGTH_SHORT).show();

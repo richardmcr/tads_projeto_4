@@ -44,7 +44,7 @@ public class MedicamentoAdapter extends ListAdapter<Medicamento, MedicamentoAdap
 
             this.binding.getRoot().setOnClickListener(view -> {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     Medicamento medicamento = getItem(position);
                     listener.onItemClick(medicamento);
                 }
@@ -56,7 +56,8 @@ public class MedicamentoAdapter extends ListAdapter<Medicamento, MedicamentoAdap
             binding.textViewNomeEmpresa.setText(medicamento.getRazaoSocial());
         }
     }
-    public static class DiffLembreteCallBack extends DiffUtil.ItemCallback<Medicamento>{
+
+    public static class DiffLembreteCallBack extends DiffUtil.ItemCallback<Medicamento> {
         public DiffLembreteCallBack() {
         }
 

@@ -14,11 +14,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.PreferenciasRepository;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Ordenacao;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.PreferenciasRepository;
 import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
 
 @HiltViewModel

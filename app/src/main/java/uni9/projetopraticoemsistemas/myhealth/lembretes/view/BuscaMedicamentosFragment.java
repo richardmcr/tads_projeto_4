@@ -18,9 +18,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import uni9.projetopraticoemsistemas.myhealth.R;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.MedicamentoAdapter;
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentBuscaMedicamentoBinding;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.MedicamentoAdapter;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Medicamento;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.viewmodel.BuscaMedicamentoViewModel;
 

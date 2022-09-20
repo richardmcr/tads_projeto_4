@@ -14,8 +14,8 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
-import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
 import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
+import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
 
 @HiltViewModel
 public class HomeViewModel extends AndroidViewModel {
