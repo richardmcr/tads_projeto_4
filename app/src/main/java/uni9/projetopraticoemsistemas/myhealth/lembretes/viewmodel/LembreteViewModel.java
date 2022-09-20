@@ -21,10 +21,12 @@ import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.MedicamentoRepository;
+import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
 
 @HiltViewModel
 public class LembreteViewModel extends AndroidViewModel {
 
+    private final UsuarioRepository usuarioRepository;
     private final MedicamentoRepository medicamentoRepository;
     private final LembreteRepository lembreteRepository;
     private final MediatorLiveData<Lembrete> lembreteMediator;
@@ -38,10 +40,12 @@ public class LembreteViewModel extends AndroidViewModel {
     @Inject
     public LembreteViewModel(@NonNull Application application,
                              LembreteRepository lembreteRepository,
-                             MedicamentoRepository medicamentoRepository) {
+                             MedicamentoRepository medicamentoRepository,
+                             UsuarioRepository usuarioRepository) {
         super(application);
         this.lembreteRepository = lembreteRepository;
         this.medicamentoRepository = medicamentoRepository;
+        this.usuarioRepository = usuarioRepository;
         this.lembreteMediator = new MediatorLiveData<>();
         this.detalhesLiveData = new MutableLiveData<>();
         this.inicioLiveData = new MutableLiveData<>();
@@ -89,14 +93,13 @@ public class LembreteViewModel extends AndroidViewModel {
         } else {
             Lembrete novoLembrete = lembreteMediator.getValue();
             assert novoLembrete != null;
-            // novoLembrete.setUsuario();
             novoLembrete.setDetalhes(detalhesLiveData.getValue());
             novoLembrete.setDataInicio(longDateToStringDate(inicioLiveData.getValue()));
             novoLembrete.setHoraInicio(longDateToStringTime(inicioLiveData.getValue()));
             novoLembrete.setDuracao(duracaoLiveData.getValue());
             novoLembrete.setIntervalo(intervaloLiveData.getValue());
             novoLembrete.setAlertas(alertasLiveData.getValue());
-            lembreteRepository.inserirLembrete(novoLembrete);
+            lembreteRepository.inserirLembrete(novoLembrete, usuarioRepository.getUsuarioLogado());
 
             if (Objects.isNull(novoLembrete.getId())) {
                 eventoLiveData.postValue(new Eventos.LembreteSalvo(0));
