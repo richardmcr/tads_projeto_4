@@ -65,7 +65,7 @@ public class MedicamentoRepository {
 
     public void buscarMedicamentos(String nome, Integer pagina) {
         buscaMedicamentoService.buscarMedicamentos(nome, pagina)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<BuscaResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<BuscaResponse> call, @NonNull Response<BuscaResponse> response) {
                         if (!Objects.isNull(response.body())) {
@@ -100,7 +100,7 @@ public class MedicamentoRepository {
 
     public void obterMedicamento(Long idMedicamento, String processo) {
         buscaMedicamentoService.obterMedicamento(processo)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<MedicamentoResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MedicamentoResponse> call, @NonNull Response<MedicamentoResponse> response) {
                         if (!Objects.isNull(response.body())) {

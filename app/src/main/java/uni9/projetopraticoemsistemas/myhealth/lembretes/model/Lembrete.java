@@ -24,7 +24,7 @@ public class Lembrete {
 
     public Boolean isCompleto() {
         long agora = System.currentTimeMillis();
-        Long inicioTratamento = Objects.requireNonNullElse(stringDateTimeTolong(this.getDataInicio() + " " + this.getHoraInicio()), 0L);
+        Long inicioTratamento = Objects.requireNonNull(stringDateTimeTolong(this.getDataInicio() + " " + this.getHoraInicio()));
 
         return agora >= inicioTratamento + (1000 * 60 * 60 * 24 * this.getDuracao());
     }

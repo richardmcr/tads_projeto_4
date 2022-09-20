@@ -25,8 +25,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         appBarConfiguration = new AppBarConfiguration
-                .Builder(Set.of(R.id.homeFragment, R.id.perfiFragment))
+                .Builder(new HashSet<>(Arrays.asList(R.id.homeFragment, R.id.perfiFragment)))
                 .build();
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
