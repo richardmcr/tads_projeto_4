@@ -1,4 +1,4 @@
-package uni9.projetopraticoemsistemas.myhealth.login;
+package uni9.projetopraticoemsistemas.myhealth.login.repositories;
 
 import android.content.Context;
 import android.content.SharedPreferences;
