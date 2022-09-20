@@ -24,6 +24,7 @@ import uni9.projetopraticoemsistemas.myhealth.R;
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentLoginBinding;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.helper.view.CustomTextWatcher;
+import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
 import uni9.projetopraticoemsistemas.myhealth.login.viewmodel.LoginViewModel;
 
 public class LoginFragment extends Fragment implements FragmentResultListener {
@@ -102,6 +103,11 @@ public class LoginFragment extends Fragment implements FragmentResultListener {
                             break;
                     }
                 } else if (evento instanceof Eventos.UsuarioLogado) {
+                    Usuario usuario = ((Eventos.UsuarioLogado) evento).getData();
+                    Bundle result = new Bundle();
+                    result.putString("usuario_logado", usuario.getNome());
+                    requireActivity().getSupportFragmentManager().setFragmentResult("usuario_logado", result);
+
                     NavHostFragment.findNavController(this).popBackStack();
                 }
                 viewModel.getEventoLiveData().setValue(null);
