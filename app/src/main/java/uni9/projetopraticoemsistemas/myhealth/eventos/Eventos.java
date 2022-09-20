@@ -85,4 +85,10 @@ public abstract class Eventos<T> {
             super(null);
         }
     }
+
+    public final static class PerfilUsuarioSalvo<T> extends Eventos<T> {
+        public PerfilUsuarioSalvo() {
+            super(null);
+        }
+    }
 }

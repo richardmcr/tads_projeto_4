@@ -17,8 +17,10 @@ import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.LembreteEnt
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.MedicamentoEntity;
 import uni9.projetopraticoemsistemas.myhealth.login.apis.UsuarioDao;
 import uni9.projetopraticoemsistemas.myhealth.login.model.entity.UsuarioEntity;
+import uni9.projetopraticoemsistemas.myhealth.perfil.apis.PerfilDao;
+import uni9.projetopraticoemsistemas.myhealth.perfil.model.entity.PerfilEntity;
 
-@Database(entities = {MedicamentoEntity.class, LembreteEntity.class, UsuarioEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {MedicamentoEntity.class, LembreteEntity.class, UsuarioEntity.class, PerfilEntity.class}, version = 2, exportSchema = false)
 public abstract class MyHealthDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
@@ -29,6 +31,8 @@ public abstract class MyHealthDatabase extends RoomDatabase {
     public abstract LembreteDao lembreteDao();
 
     public abstract UsuarioDao usuarioDao();
+
+    public abstract PerfilDao perfilDao();
 
     public static class Callback extends RoomDatabase.Callback {
 

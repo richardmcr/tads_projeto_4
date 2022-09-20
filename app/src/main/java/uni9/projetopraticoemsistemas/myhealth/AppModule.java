@@ -18,10 +18,14 @@ import uni9.projetopraticoemsistemas.myhealth.lembretes.mappers.MedicamentoMappe
 import uni9.projetopraticoemsistemas.myhealth.lembretes.mappers.MedicamentoMapperImpl;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.MedicamentoRepository;
-import uni9.projetopraticoemsistemas.myhealth.login.UsuarioRepository;
 import uni9.projetopraticoemsistemas.myhealth.login.apis.UsuarioDao;
 import uni9.projetopraticoemsistemas.myhealth.login.mappers.UsuarioMapper;
 import uni9.projetopraticoemsistemas.myhealth.login.mappers.UsuarioMapperImpl;
+import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
+import uni9.projetopraticoemsistemas.myhealth.perfil.apis.PerfilDao;
+import uni9.projetopraticoemsistemas.myhealth.perfil.mappers.PerfilMapper;
+import uni9.projetopraticoemsistemas.myhealth.perfil.mappers.PerfilMapperImpl;
+import uni9.projetopraticoemsistemas.myhealth.perfil.repositories.PerfilRepository;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -52,6 +56,11 @@ public class AppModule {
     }
 
     @Provides
+    PerfilMapper providePerfilMapper() {
+        return new PerfilMapperImpl();
+    }
+
+    @Provides
     @Singleton
     LembreteDao provideLembreteDao(MyHealthDatabase myHealthDatabase) {
         return myHealthDatabase.lembreteDao();
@@ -71,6 +80,12 @@ public class AppModule {
 
     @Provides
     @Singleton
+    PerfilDao providePerfilDao(MyHealthDatabase myHealthDatabase) {
+        return myHealthDatabase.perfilDao();
+    }
+
+    @Provides
+    @Singleton
     LembreteRepository provideLembreteRepository(LembreteDao lembreteDao, LembreteMapper lembreteMapper) {
         return new LembreteRepository(lembreteDao, lembreteMapper);
     }
@@ -85,5 +100,11 @@ public class AppModule {
     @Singleton
     UsuarioRepository provideUsuarioRepository(Application app, UsuarioDao usuarioDao, UsuarioMapper usuarioMapper) {
         return new UsuarioRepository(app.getApplicationContext(), usuarioDao, usuarioMapper);
+    }
+
+    @Provides
+    @Singleton
+    PerfilRepository providePerfilRepository(PerfilDao perfilDao, PerfilMapper perfilMapper) {
+        return new PerfilRepository(perfilDao, perfilMapper);
     }
 }
