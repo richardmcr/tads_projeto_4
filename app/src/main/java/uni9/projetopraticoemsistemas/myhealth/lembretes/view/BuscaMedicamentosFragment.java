@@ -18,9 +18,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import uni9.projetopraticoemsistemas.myhealth.R;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.MedicamentoAdapter;
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentBuscaMedicamentoBinding;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.MedicamentoAdapter;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Medicamento;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.viewmodel.BuscaMedicamentoViewModel;
 
@@ -78,7 +78,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
         viewModel.getMedicamentoListLiveData().observe(getViewLifecycleOwner(),
                 buscaResponse -> {
                     viewModel.getLoadingLiveData().setValue(Boolean.FALSE);
-                    if (buscaResponse != null) {
+                    if (!Objects.isNull(buscaResponse)) {
                         if (buscaResponse.isEmpty()) {
                             binding.textViewMedicamentoNaoEncontrato.setVisibility(View.VISIBLE);
                         } else {
@@ -90,7 +90,7 @@ public class BuscaMedicamentosFragment extends Fragment implements MedicamentoAd
 
         viewModel.getMedicamentoLiveData().observe(getViewLifecycleOwner(),
                 medicamento -> {
-                    if (medicamento != null) {
+                    if (!Objects.isNull(medicamento)) {
                         Navigation.findNavController(requireView())
                                 .navigate(BuscaMedicamentosFragmentDirections.actionBuscaMedicamentoFragmentToMedicamentoFragment(medicamento.getId(), medicamento.getProcesso()));
                     }

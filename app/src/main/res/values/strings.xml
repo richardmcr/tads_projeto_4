@@ -3,7 +3,7 @@
     <string name="medicamento">Medicamento</string>
     <string name="buscar">Buscar</string>
     <string name="salvar">Salvar</string>
-    <string name="inicio_tratamento">Início do tratamento</string>
+    <string name="inicio_tratamento">Início do Tratamento</string>
     <string name="duracao">Duração (em dias)</string>
     <string name="intervalo">Intervalo (em horas)</string>
     <string name="alertas">Alertas</string>
@@ -64,4 +64,35 @@
     <string name="sair">Sair</string>
     <string name="logout_sucesso">Logout efeutado com sucesso!</string>
     <string name="bem_vindo">Bem vindo, %1$s!</string>
+    <string name="nascimento">Data de Nascimento</string>
+    <string name="genero">Gênero</string>
+    <string name="tipo_sanguineo">Tipo Sanguíneo</string>
+    <string name="peso">Peso (em kg)</string>
+    <string name="botao_data_nascimento">Botão data de nascimento</string>
+    <string name="altura">Altura (em metros)</string>
+    <string name="perfil_usuario">Perfil de Usuário</string>
+    <string name="home">Início</string>
+    <string name="data_futura">A data de nascimento não pode estar no futuro!</string>
+    <string name="peso_elevado">O peso não pode ser tão alto!</string>
+    <string name="peso_negativo">O peso não pode ser menor que zero!</string>
+    <string name="peso_zerado">O peso não pode ser igual a zero!</string>
+    <string name="altura_elevada">A altura não pode ser tão alta!</string>
+    <string name="altura_negativa">A altura não pode ser menor que zero!</string>
+    <string name="altura_zerada">A altura não pode ser igual a zero!</string>
+    <string name="perfil_salvo_sucesso">Perfil salvo com sucesso!</string>
+    <string-array name="generos">
+        <item>Feminino</item>
+        <item>Masculino</item>
+        <item>Outro</item>
+    </string-array>
+    <string-array name="tipos_sanquineos">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
 </resources>

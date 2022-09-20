@@ -14,12 +14,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.PreferenciasRepository;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Ordenacao;
-import uni9.projetopraticoemsistemas.myhealth.login.UsuarioRepository;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.LembreteRepository;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.PreferenciasRepository;
+import uni9.projetopraticoemsistemas.myhealth.login.repositories.UsuarioRepository;
 
 @HiltViewModel
 public class LembretesViewModel extends AndroidViewModel {
@@ -33,13 +33,13 @@ public class LembretesViewModel extends AndroidViewModel {
     private final MutableLiveData<Long> usuarioLiveData;
     private final MutableLiveData<List<Lembrete>> lembreteListLiveData;
     private final MutableLiveData<Eventos<?>> lembreteEventoLiveData;
-    private final Observer<Ordenacao> observerOdernacao = new Observer<Ordenacao>() {
+    private final Observer<Ordenacao> observerOdernacao = new Observer<>() {
         @Override
         public void onChanged(Ordenacao ordenacao) {
             preferenciasRepository.atualizarOrdenacao(ordenacao);
         }
     };
-    private final Observer<Boolean> observerOcultarCompletos = new Observer<Boolean>() {
+    private final Observer<Boolean> observerOcultarCompletos = new Observer<>() {
         @Override
         public void onChanged(Boolean ocultarCompletos) {
             preferenciasRepository.atualizarOcultarCompletos(ocultarCompletos);

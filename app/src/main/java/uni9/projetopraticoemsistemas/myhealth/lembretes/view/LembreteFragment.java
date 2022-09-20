@@ -76,7 +76,7 @@ public class LembreteFragment extends Fragment {
         binding.switchAlertas.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.setAlertas(isChecked));
 
         viewModel.getLembreteLiveData().observe(getViewLifecycleOwner(), lembrete -> {
-            if (lembrete != null) {
+            if ((!Objects.isNull(lembrete))) {
                 if (lembrete.getId() == 0L) {
                     binding.imageButtonDataInicioTratamento.setOnClickListener(v -> {
                         final Calendar c = Calendar.getInstance();
@@ -137,7 +137,7 @@ public class LembreteFragment extends Fragment {
                 if (evento instanceof Eventos.MensagemErro) {
                     Snackbar.make(requireView(), ((Eventos.MensagemErro) evento).getData(), Snackbar.LENGTH_LONG).show();
                 } else if (evento instanceof Eventos.ErroValidacao) {
-                    switch(((Eventos.ErroValidacao) evento).getData()){
+                    switch (((Eventos.ErroValidacao) evento).getData()) {
                         case "duracao":
                             binding.textInputEditTextDuracaoTratamento.setError(getString(R.string.erro_campo_vazio, getString(R.string.duracao)));
                             Snackbar.make(requireView(), getString(R.string.erro_campo_vazio, getString(R.string.duracao)), Snackbar.LENGTH_LONG).show();

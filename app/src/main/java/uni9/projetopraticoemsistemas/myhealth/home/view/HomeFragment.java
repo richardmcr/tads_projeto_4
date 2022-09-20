@@ -1,7 +1,6 @@
 package uni9.projetopraticoemsistemas.myhealth.home.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -29,7 +29,7 @@ import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.home.viewmodel.HomeViewModel;
 import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FragmentResultListener {
 
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
@@ -70,9 +70,10 @@ public class HomeFragment extends Fragment {
 
         binding.extendedFloatingActionButtonLembretes.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToLembretesFragment()));
 
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("usuario_logado", getViewLifecycleOwner(), this);
+
         final NavController navController = Navigation.findNavController(view);
         viewModel.getUsuarioIdLiveData().observe(getViewLifecycleOwner(), usuarioId -> {
-            Log.d("LOGIN", "usuario: " + usuarioId);
             if (usuarioId == 0L) {
                 navController.navigate(R.id.loginFragment);
             } else {
@@ -90,10 +91,17 @@ public class HomeFragment extends Fragment {
                     navController.navigate(R.id.loginFragment);
                 } else if (evento instanceof Eventos.UsuarioLogado) {
                     Usuario usuario = ((Eventos.UsuarioLogado) evento).getData();
-                    Snackbar.make(requireView(), getString(R.string.bem_vindo, usuario.getNome()), Snackbar.LENGTH_LONG).show();
                 }
                 viewModel.getEventoLiveData().setValue(null);
             }
         });
+    }
+
+    @Override
+    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+        String usuarioLogado = result.getString("usuario_logado");
+        if (!Objects.isNull(usuarioLogado)) {
+            Snackbar.make(requireView(), getString(R.string.bem_vindo, usuarioLogado), Snackbar.LENGTH_LONG).show();
+        }
     }
 }

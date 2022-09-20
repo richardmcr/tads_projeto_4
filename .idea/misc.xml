@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_novo_lembrete.xml" value="0.14402173913043478" />
+        <entry key="app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/fragment_busca_medicamento.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_date_time.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28703703703703703" />
@@ -30,9 +31,11 @@
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_novo_lembrete.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/fragment_novo_usuario.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/layout/fragment_perfil_usuario.xml" value="0.25" />
         <entry key="app/src/main/res/layout/lembrete_item.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/medicamento_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/mynavgraph.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/drawer_bottom_nav_menu.xml" value="0.5939226519337016" />
         <entry key="app/src/main/res/menu/menu_fragment_lembrete.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_fragment_lembretes.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/menu/menu_home.xml" value="0.19791666666666666" />

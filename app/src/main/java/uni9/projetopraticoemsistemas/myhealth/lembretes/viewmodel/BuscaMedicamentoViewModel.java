@@ -12,9 +12,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.MedicamentoRepository;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Medicamento;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.repositories.MedicamentoRepository;
 
 @HiltViewModel
 public class BuscaMedicamentoViewModel extends AndroidViewModel {

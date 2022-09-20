@@ -25,11 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import uni9.projetopraticoemsistemas.myhealth.R;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.LembretesAdapter;
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentLembretesBinding;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
+import uni9.projetopraticoemsistemas.myhealth.lembretes.adapters.LembretesAdapter;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Ordenacao;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.viewmodel.LembretesViewModel;
@@ -85,7 +87,7 @@ public class LembretesFragment extends Fragment implements LembretesAdapter.OnIt
 
         viewModel.getLembreteListLiveData().observe(getViewLifecycleOwner(),
                 lembreteList -> {
-                    if (lembreteList == null) {
+                    if (Objects.isNull(lembreteList)) {
                         binding.textViewSemLembrete.setVisibility(View.VISIBLE);
                     } else {
                         if (lembreteList.isEmpty()) {
@@ -99,7 +101,7 @@ public class LembretesFragment extends Fragment implements LembretesAdapter.OnIt
 
         viewModel.getLembreteEventoLiveData().observe(getViewLifecycleOwner(),
                 eventos -> {
-                    if (eventos != null) {
+                    if (!Objects.isNull(eventos)) {
                         if (eventos instanceof Eventos.LembreteRemovido) {
                             Snackbar.make(requireView(), getString(R.string.lembrete_removido), Snackbar.LENGTH_LONG)
                                     .setAction(getString(R.string.desfazer),

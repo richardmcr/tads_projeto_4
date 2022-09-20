@@ -22,9 +22,9 @@ public class Lembrete {
     private String dataCriacao;
     private String proximaDose;
 
-    public Boolean isCompleto(){
+    public Boolean isCompleto() {
         long agora = System.currentTimeMillis();
-        Long inicioTratamento = stringDateTimeTolong(this.getDataInicio() + " " + this.getHoraInicio());
+        Long inicioTratamento = Objects.requireNonNullElse(stringDateTimeTolong(this.getDataInicio() + " " + this.getHoraInicio()), 0L);
 
         return agora >= inicioTratamento + (1000 * 60 * 60 * 24 * this.getDuracao());
     }

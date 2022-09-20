@@ -18,9 +18,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uni9.projetopraticoemsistemas.myhealth.MyHealthDatabase;
+import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.BuscaMedicamentoService;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.MedicamentoDao;
-import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.mappers.MedicamentoMapper;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Medicamento;
@@ -65,11 +65,11 @@ public class MedicamentoRepository {
 
     public void buscarMedicamentos(String nome, Integer pagina) {
         buscaMedicamentoService.buscarMedicamentos(nome, pagina)
-                .enqueue(new Callback<BuscaResponse>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<BuscaResponse> call, @NonNull Response<BuscaResponse> response) {
-                        if (response.body() != null) {
-                            medicamentoListLiveData.postValue(medicamentoMapper.contentResponseToMedicamentos(response.body().getContentResponse()));
+                        if (!Objects.isNull(response.body())) {
+                            medicamentoListLiveData.postValue(medicamentoMapper.contentResponseToMedicamentos(Objects.requireNonNull(response.body()).getContentResponse()));
                         }
                     }
 
@@ -100,10 +100,10 @@ public class MedicamentoRepository {
 
     public void obterMedicamento(Long idMedicamento, String processo) {
         buscaMedicamentoService.obterMedicamento(processo)
-                .enqueue(new Callback<MedicamentoResponse>() {
+                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<MedicamentoResponse> call, @NonNull Response<MedicamentoResponse> response) {
-                        if (response.body() != null) {
+                        if (!Objects.isNull(response.body())) {
                             MyHealthDatabase.databaseWriteExecutor.execute(() -> {
                                 MedicamentoEntity medicamentoEntity = medicamentoDao.findMedicamentoById(idMedicamento);
                                 medicamentoMapper.updateMedicamentoEntityFromMedicamentoResponse(response.body(), medicamentoEntity);
