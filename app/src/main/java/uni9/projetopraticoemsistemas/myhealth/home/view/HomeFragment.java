@@ -27,7 +27,6 @@ import uni9.projetopraticoemsistemas.myhealth.R;
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentHomeBinding;
 import uni9.projetopraticoemsistemas.myhealth.eventos.Eventos;
 import uni9.projetopraticoemsistemas.myhealth.home.viewmodel.HomeViewModel;
-import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
 
 public class HomeFragment extends Fragment implements FragmentResultListener {
 
@@ -69,6 +68,7 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         binding.extendedFloatingActionButtonLembretes.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToLembretesFragment()));
+        binding.extendedFloatingActionButtonBulaMedicamentos.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToBuscaMedicamentosFragment()));
 
         requireActivity().getSupportFragmentManager().setFragmentResultListener("usuario_logado", getViewLifecycleOwner(), this);
 
@@ -89,8 +89,6 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
                     requireActivity().getSupportFragmentManager().setFragmentResult("logout", result);
 
                     navController.navigate(R.id.loginFragment);
-                } else if (evento instanceof Eventos.UsuarioLogado) {
-                    Usuario usuario = ((Eventos.UsuarioLogado) evento).getData();
                 }
                 viewModel.getEventoLiveData().setValue(null);
             }

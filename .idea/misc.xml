@@ -21,9 +21,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_novo_lembrete.xml" value="0.14402173913043478" />
         <entry key="app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.2222222222222222" />
+        <entry key="app/src/main/res/layout/fragment_bula.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/fragment_busca_medicamento.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_date_time.xml" value="0.23020833333333332" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28703703703703703" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21203703703703702" />
         <entry key="app/src/main/res/layout/fragment_lembrete.xml" value="0.22666666666666666" />
         <entry key="app/src/main/res/layout/fragment_lembretes.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2518518518518518" />

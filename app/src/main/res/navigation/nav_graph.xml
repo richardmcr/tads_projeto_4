@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_homeFragment_to_lembretesFragment"
             app:destination="@id/lembretesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_buscaMedicamentosFragment"
+            app:destination="@id/bulaBuscaMedicamentoFragment" />
     </fragment>
 
     <fragment
@@ -108,4 +111,31 @@
         android:name="uni9.projetopraticoemsistemas.myhealth.perfil.view.PerfilFragment"
         android:label="@string/perfil_usuario"
         tools:layout="@layout/fragment_perfil_usuario" />
+
+    <fragment
+        android:id="@+id/bulaBuscaMedicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.bulas.view.BuscaMedicamentosFragment"
+        android:label="@string/medicamentos"
+        tools:layout="@layout/fragment_busca_medicamento">
+        <action
+            android:id="@+id/action_bulaBuscaMedicamentoFragment_to_bulaMedicamentoFragment"
+            app:destination="@id/bulaMedicamentoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bulaMedicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.bulas.view.MedicamentoFragment"
+        android:label="@string/medicamento"
+        tools:layout="@layout/fragment_medicamento">
+        <argument
+            android:name="idMedicamento"
+            app:argType="long" />
+        <argument
+            android:name="processo"
+            app:argType="java.lang.String" />
+    </fragment>
 </navigation>
