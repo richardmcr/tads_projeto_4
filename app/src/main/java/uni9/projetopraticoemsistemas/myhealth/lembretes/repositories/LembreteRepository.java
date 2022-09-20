@@ -98,9 +98,9 @@ public class LembreteRepository {
         });
     }
 
-    public void inserirLembrete(Lembrete lembrete) {
+    public void inserirLembrete(Lembrete lembrete, Long usuarioId) {
         MyHealthDatabase.databaseWriteExecutor.execute(() -> {
-            lembreteDao.insert(lembrete.getUsuario().getId(), lembrete.getMedicamento().getId(), lembrete.getDetalhes(),
+            lembreteDao.insert(usuarioId, lembrete.getMedicamento().getId(), lembrete.getDetalhes(),
                     stringDateTimeTolong(lembrete.getDataInicio() + " " + lembrete.getHoraInicio()), lembrete.getDuracao(),
                     lembrete.getIntervalo(), lembrete.getAlertas());
             getLembretes();

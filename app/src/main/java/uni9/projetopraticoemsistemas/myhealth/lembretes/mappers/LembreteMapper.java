@@ -20,7 +20,7 @@ import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.Medicamento
 public interface LembreteMapper {
 
     @Mapping(target = "id", source = "lembreteJoinMedicamento.lembreteEntity.id")
-    @Mapping(target = "usuario", ignore = true)//source = "lembreteJoinMedicamento.usuario")
+    @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "medicamento", source = "lembreteJoinMedicamento.medicamentoEntity")
     @Mapping(target = "detalhes", source = "lembreteJoinMedicamento.lembreteEntity.detalhes")
     @Mapping(target = "dataInicio", source = "lembreteJoinMedicamento.lembreteEntity.dataInicio", qualifiedBy = {DateConverter.class, LongToStringDate.class})
