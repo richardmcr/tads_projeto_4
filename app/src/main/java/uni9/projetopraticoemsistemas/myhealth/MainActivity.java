@@ -13,17 +13,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.splashscreen.SplashScreen;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -43,9 +47,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
         verifyStoragePermission(this);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,15 +75,29 @@ public class MainActivity extends AppCompatActivity {
 
         appBarConfiguration = new AppBarConfiguration
                 .Builder(new HashSet<>(Arrays.asList(R.id.configuracoesFragment, R.id.homeFragment, R.id.perfiFragment)))
+                .setOpenableLayout(drawerLayout)
                 .build();
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+
+        viewModel.getUsuarioLiveData().observe(this, usuario -> {
+            if(!Objects.isNull(usuario)) {
+                View headerView = navigationView.getHeaderView(0);
+                TextView textViewNome = (TextView) headerView.findViewById(R.id.textViewNome);
+                TextView textViewEmail = (TextView) headerView.findViewById(R.id.textViewEmail);
+
+                textViewNome.setText(usuario.getNome());
+                textViewEmail.setText(usuario.getEmail());
+            }
+        });
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        return navController.navigateUp() || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
     public void verifyStoragePermission(Activity activity) {

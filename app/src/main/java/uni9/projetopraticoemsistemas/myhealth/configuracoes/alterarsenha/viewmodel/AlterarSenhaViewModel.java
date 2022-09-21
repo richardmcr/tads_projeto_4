@@ -43,7 +43,7 @@ public class AlterarSenhaViewModel extends AndroidViewModel {
         this.idUsuarioLiveData = usuarioRepository.getNovoUsuarioLiveData();
         this.eventoLiveData = new MutableLiveData<>();
         this.usuarioObserver = usuario -> {
-            if (!Objects.isNull(usuario)) {
+            if (!Objects.isNull(usuario) && !Objects.isNull(this.senhaAtualLiveData.getValue())) {
                 if (!Objects.equals(this.senhaAtualLiveData.getValue(), usuario.getSenha())) {
                     onErroDeValidacao("senha_errada");
                 } else {
