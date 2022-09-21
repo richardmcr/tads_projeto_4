@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home">
+        <menu>
+            <item
+                android:id="@+id/lembretesFragment"
+                android:icon="@drawable/ic_baseline_calendar_today_24"
+                android:title="@string/lembretes" />
+
+            <item
+                android:id="@+id/bulaBuscaMedicamentoFragment"
+                android:icon="@drawable/ic_baseline_article_24"
+                android:title="@string/bula_medicamentos" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/perfiFragment"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/perfil_usuario" />
+
+    <item
+        android:id="@+id/configuracoesFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/configuracoes" >
+        <menu>
+            <item
+                android:id="@+id/alterarSenhaFragment"
+                android:icon="@drawable/ic_baseline_vpn_key_24"
+                android:title="@string/alterar_senha" />
+        </menu>
+    </item>
+</menu>

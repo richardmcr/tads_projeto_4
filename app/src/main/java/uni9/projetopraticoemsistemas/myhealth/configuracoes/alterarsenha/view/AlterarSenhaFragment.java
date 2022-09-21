@@ -66,9 +66,7 @@ public class AlterarSenhaFragment extends Fragment {
 
         viewModel.getEventoLiveData().observe(getViewLifecycleOwner(), evento -> {
             if (!Objects.isNull(evento)) {
-                if (evento instanceof Eventos.MensagemErro) {
-                    Snackbar.make(requireView(), ((Eventos.MensagemErro) evento).getData(), Snackbar.LENGTH_LONG).show();
-                } else if (evento instanceof Eventos.ErroValidacao) {
+                if (evento instanceof Eventos.ErroValidacao) {
                     switch (((Eventos.ErroValidacao) evento).getData()) {
                         case "senha_atual":
                             binding.textInputEditTextSenhaAtual.setError(getString(R.string.erro_campo_vazio, getString(R.string.senha_atual)));
