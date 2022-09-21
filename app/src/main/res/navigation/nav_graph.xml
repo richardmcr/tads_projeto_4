@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/lembretesFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.lembretes.view.LembretesFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.lembretes.view.LembretesFragment"
         android:label="@string/lembretes"
         tools:layout="@layout/fragment_lembretes">
         <action
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.home.view.HomeFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.home.view.HomeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home">
         <action
@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/buscaMedicamentoFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.lembretes.view.BuscaMedicamentosFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.lembretes.view.BuscaMedicamentosFragment"
         android:label="@string/medicamentos"
         tools:layout="@layout/fragment_busca_medicamento">
         <action
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/medicamentoFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.lembretes.view.MedicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.lembretes.view.MedicamentoFragment"
         android:label="@string/medicamento"
         tools:layout="@layout/fragment_medicamento">
         <argument
@@ -89,7 +89,7 @@
 
     <fragment
         android:id="@+id/lembreteFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.lembretes.view.LembreteFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.lembretes.view.LembreteFragment"
         android:label="@string/lembrete"
         tools:layout="@layout/fragment_lembrete">
         <argument
@@ -114,7 +114,7 @@
 
     <fragment
         android:id="@+id/bulaBuscaMedicamentoFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.bulas.view.BuscaMedicamentosFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.bulas.view.BuscaMedicamentosFragment"
         android:label="@string/medicamentos"
         tools:layout="@layout/fragment_busca_medicamento">
         <action
@@ -128,7 +128,7 @@
 
     <fragment
         android:id="@+id/bulaMedicamentoFragment"
-        android:name="uni9.projetopraticoemsistemas.myhealth.bulas.view.MedicamentoFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.bulas.view.MedicamentoFragment"
         android:label="@string/medicamento"
         tools:layout="@layout/fragment_medicamento">
         <argument
@@ -138,4 +138,9 @@
             android:name="processo"
             app:argType="java.lang.String" />
     </fragment>
+    <fragment
+        android:id="@+id/configuracoesFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.configuracoes.configuracoes.view.ConfiguracoesFragment"
+        android:label="@string/configuracoes"
+        tools:layout="@layout/fragment_configuracoes" />
 </navigation>

@@ -82,6 +82,8 @@
     <string name="perfil_salvo_sucesso">Perfil salvo com sucesso!</string>
     <string name="bula_medicamentos">Bula de Medicamentos</string>
     <string name="baixando_bula">Baixando a bula</string>
+    <string name="altera_senha">Alterar Senha</string>
+    <string name="configuracoes">Configurações</string>
     <string-array name="generos">
         <item>Feminino</item>
         <item>Masculino</item>
