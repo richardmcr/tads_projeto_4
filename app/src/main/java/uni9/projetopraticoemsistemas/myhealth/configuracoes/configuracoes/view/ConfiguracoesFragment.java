@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import uni9.projetopraticoemsistemas.myhealth.databinding.FragmentConfiguracoesBinding;
 import uni9.projetopraticoemsistemas.myhealth.home.home.viewmodel.HomeViewModel;
@@ -33,6 +34,8 @@ public class ConfiguracoesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel.init();
+
+        binding.extendedFloatingActionButtonAlterarSenha.setOnClickListener(v -> Navigation.findNavController(v).navigate(ConfiguracoesFragmentDirections.actionConfiguracoesFragmentToAlterarSenhaFragment()));
 
     }
 

@@ -2,6 +2,7 @@ package uni9.projetopraticoemsistemas.myhealth.login.apis;
 
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import uni9.projetopraticoemsistemas.myhealth.login.model.entity.UsuarioEntity;
 
@@ -16,4 +17,7 @@ public interface UsuarioDao {
 
     @Query("INSERT INTO usuario (nome, email, senha) VALUES (:nome, :email, :senha) ")
     long insert(String nome, String email, String senha);
+
+    @Update
+    int update(UsuarioEntity usuarioEntity);
 }

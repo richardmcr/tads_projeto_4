@@ -67,7 +67,7 @@ public class LembretesViewModel extends AndroidViewModel {
         ordenacaoLiveData.observeForever(observerOdernacao);
         ocultarCompletosLiveData.observeForever(observerOcultarCompletos);
 
-        usuarioLiveData.setValue(usuarioRepository.getUsuarioLogado());
+        usuarioLiveData.setValue(usuarioRepository.getIdUsuarioLogado());
         lembreteEventoLiveData.setValue(null);
         ordenacaoLiveData.postValue(preferenciasRepository.getOrdenacao());
         ocultarCompletosLiveData.postValue(preferenciasRepository.getOcultarCompletos());
@@ -91,7 +91,7 @@ public class LembretesViewModel extends AndroidViewModel {
     }
 
     public void onDesfazerLembreteRemovido(Lembrete lembrete) {
-        lembreteRepository.inserirLembrete(lembrete, usuarioRepository.getUsuarioLogado());
+        lembreteRepository.inserirLembrete(lembrete, usuarioRepository.getIdUsuarioLogado());
         lembreteEventoLiveData.postValue(new Eventos.LembreteRecuperado<>());
     }
 

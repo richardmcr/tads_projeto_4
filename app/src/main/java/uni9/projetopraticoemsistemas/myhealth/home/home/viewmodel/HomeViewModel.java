@@ -50,7 +50,7 @@ public class HomeViewModel extends AndroidViewModel {
     public void init() {
         usuarioLiveData.setValue(null);
         usuarioLiveData.observeForever(usuarioObserver);
-        usuarioIdLiveData.setValue(usuarioRepository.getUsuarioLogado());
+        usuarioIdLiveData.setValue(usuarioRepository.getIdUsuarioLogado());
     }
 
     public void onLogin(Long id) {

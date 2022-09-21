@@ -99,7 +99,7 @@ public class LembreteViewModel extends AndroidViewModel {
             novoLembrete.setDuracao(duracaoLiveData.getValue());
             novoLembrete.setIntervalo(intervaloLiveData.getValue());
             novoLembrete.setAlertas(alertasLiveData.getValue());
-            lembreteRepository.inserirLembrete(novoLembrete, usuarioRepository.getUsuarioLogado());
+            lembreteRepository.inserirLembrete(novoLembrete, usuarioRepository.getIdUsuarioLogado());
 
             if (Objects.isNull(novoLembrete.getId())) {
                 eventoLiveData.postValue(new Eventos.LembreteSalvo(0));

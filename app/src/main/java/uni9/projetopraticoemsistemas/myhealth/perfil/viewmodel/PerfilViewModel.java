@@ -69,7 +69,7 @@ public class PerfilViewModel extends AndroidViewModel {
     }
 
     public void onPerfilUsuarioAberto() {
-        perfilRepository.obterPerfilUsuario(usuarioRepository.getUsuarioLogado());
+        perfilRepository.obterPerfilUsuario(usuarioRepository.getIdUsuarioLogado());
     }
 
     public void inserirPerfilUsuario() {
@@ -94,7 +94,7 @@ public class PerfilViewModel extends AndroidViewModel {
             perfil.setAltura(alturaLiveData.getValue());
             perfil.setGenero(generoLiveData.getValue());
             perfil.setTipoSanguineo(tipoSanguineoLiveData.getValue());
-            perfilRepository.inserirPerfilUsuario(perfil, usuarioRepository.getUsuarioLogado());
+            perfilRepository.inserirPerfilUsuario(perfil, usuarioRepository.getIdUsuarioLogado());
         }
     }
 

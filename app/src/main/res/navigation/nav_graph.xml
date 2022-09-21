@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mynavgraph"
+    android:label="@string/alterar_senha"
     app:startDestination="@id/homeFragment">
 
     <fragment
@@ -142,5 +143,14 @@
         android:id="@+id/configuracoesFragment"
         android:name="uni9.projetopraticoemsistemas.myhealth.configuracoes.configuracoes.view.ConfiguracoesFragment"
         android:label="@string/configuracoes"
-        tools:layout="@layout/fragment_configuracoes" />
+        tools:layout="@layout/fragment_configuracoes">
+        <action
+            android:id="@+id/action_configuracoesFragment_to_alterarSenhaFragment"
+            app:destination="@id/alterarSenhaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alterarSenhaFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.configuracoes.alterarsenha.view.AlterarSenhaFragment"
+        android:label="@string/alterar_senha"
+        tools:layout="@layout/fragment_alterar_senha" />
 </navigation>

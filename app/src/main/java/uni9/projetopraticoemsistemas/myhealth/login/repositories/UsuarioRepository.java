@@ -66,6 +66,13 @@ public class UsuarioRepository {
         });
     }
 
+    public void obterUsuarioLogado() {
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            UsuarioEntity usuarioEntity = usuarioDao.getUsuarioById(getIdUsuarioLogado());
+            usuarioLiveData.postValue(usuarioMapper.usuarioEntityToUsuario(usuarioEntity));
+        });
+    }
+
     public void sair() {
         editor.putLong("usuario", 0L);
         editor.commit();
@@ -88,7 +95,14 @@ public class UsuarioRepository {
     }
     /* Fim Cadastrar novo usuário */
 
-    public Long getUsuarioLogado() {
+    public void alterarSenha(Usuario usuario) {
+        MyHealthDatabase.databaseWriteExecutor.execute(() -> {
+            long id = usuarioDao.update(usuarioMapper.usuarioToUsuarioEntity(usuario));
+            novoUsuarioLiveData.postValue(id);
+        });
+    }
+
+    public Long getIdUsuarioLogado() {
         return usuarioSharedPreferences.getLong("usuario", 0L);
     }
 

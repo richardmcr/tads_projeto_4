@@ -91,4 +91,10 @@ public abstract class Eventos<T> {
             super(null);
         }
     }
+
+    public static class SenhaAlterada<T> extends Eventos<T> {
+        public SenhaAlterada() {
+            super(null);
+        }
+    }
 }
