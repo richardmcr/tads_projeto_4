@@ -17,7 +17,7 @@
         <item name="iconTint">@color/white</item>
     </style>
 
-    <style name="Theme.App.Starting" parent="Theme.SplashScreen.IconBackground">
+    <style name="Theme.MyHealth.Starting" parent="Theme.SplashScreen.IconBackground">
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/secondary_200</item>
         <item name="windowSplashScreenBackground">@color/primary_700</item>
