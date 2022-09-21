@@ -11,10 +11,10 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.LembreteDao;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.apis.MedicamentoDao;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.LembreteEntity;
-import uni9.projetopraticoemsistemas.myhealth.lembretes.model.entity.MedicamentoEntity;
+import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.LembreteDao;
+import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.MedicamentoDao;
+import uni9.projetopraticoemsistemas.myhealth.home.lembretes.model.entity.LembreteEntity;
+import uni9.projetopraticoemsistemas.myhealth.home.lembretes.model.entity.MedicamentoEntity;
 import uni9.projetopraticoemsistemas.myhealth.login.apis.UsuarioDao;
 import uni9.projetopraticoemsistemas.myhealth.login.model.entity.UsuarioEntity;
 import uni9.projetopraticoemsistemas.myhealth.perfil.apis.PerfilDao;

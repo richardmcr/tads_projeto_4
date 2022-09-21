@@ -2,7 +2,7 @@ package uni9.projetopraticoemsistemas.myhealth.eventos;
 
 import androidx.annotation.NonNull;
 
-import uni9.projetopraticoemsistemas.myhealth.lembretes.model.Lembrete;
+import uni9.projetopraticoemsistemas.myhealth.home.lembretes.model.Lembrete;
 import uni9.projetopraticoemsistemas.myhealth.login.model.Usuario;
 
 public abstract class Eventos<T> {
