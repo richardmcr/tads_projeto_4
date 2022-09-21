@@ -57,6 +57,7 @@
     <string name="erro_email_invalido">O email digitado não é válido!</string>
     <string name="erro_email_existente">O email digitado já existe na base de dados!</string>
     <string name="erro_senha_curta">A senha precisa ter 6 dígitos!</string>
+    <string name="erro_nova_senha_curta">A nova senha precisa ter 6 dígitos!</string>
     <string name="senhas_diferentes">As senhas digitadas são diferentes!</string>
     <string name="novo_usuario_criado">Usuário criado com sucesso!</string>
     <string name="usuario_nao_encontrado">Usuário não encontrado</string>
@@ -82,6 +83,12 @@
     <string name="perfil_salvo_sucesso">Perfil salvo com sucesso!</string>
     <string name="bula_medicamentos">Bula de Medicamentos</string>
     <string name="baixando_bula">Baixando a bula</string>
+    <string name="alterar_senha">Alterar Senha</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="nova_senha">Nova Senha</string>
+    <string name="senha_atual">Senha Atual</string>
+    <string name="senha_alterada_sucesso">Senha alterada com sucesso!</string>
+    <string name="senha_atual_errada">Senha atual errada!</string>
     <string-array name="generos">
         <item>Feminino</item>
         <item>Masculino</item>

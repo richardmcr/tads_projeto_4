@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
-    tools:context=".lembretes.view.MedicamentoFragment">
+    tools:context=".home.lembretes.view.MedicamentoFragment">
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/contentLoadingProgressBar"

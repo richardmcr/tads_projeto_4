@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         appBarConfiguration = new AppBarConfiguration
-                .Builder(new HashSet<>(Arrays.asList(R.id.homeFragment, R.id.perfiFragment)))
+                .Builder(new HashSet<>(Arrays.asList(R.id.configuracoesFragment, R.id.homeFragment, R.id.perfiFragment)))
                 .build();
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

@@ -15,12 +15,11 @@ public interface UsuarioMapper {
     @Mapping(target = "senha", source = "usuarioEntity.senha")
     Usuario usuarioEntityToUsuario(UsuarioEntity usuarioEntity);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "usuario.id")
     @Mapping(target = "nome", source = "usuario.nome")
     @Mapping(target = "email", source = "usuario.email")
     @Mapping(target = "senha", source = "usuario.senha")
-    @Mapping(target = "dataCriacao", ignore = true)
+    @Mapping(target = "dataCriacao", expression = "java( new java.util.Date().getTime() )")
     UsuarioEntity usuarioToUsuarioEntity(Usuario usuario);
-
 
 }
