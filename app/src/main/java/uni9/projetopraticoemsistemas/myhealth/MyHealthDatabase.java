@@ -11,6 +11,10 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import uni9.projetopraticoemsistemas.myhealth.home.agua.apis.ConsumoDiarioDao;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.apis.LembreteAguaDao;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.model.entity.ConsumoDiarioEntity;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.model.entity.LembreteAguaEntity;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.LembreteDao;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.MedicamentoDao;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.model.entity.LembreteEntity;
@@ -20,7 +24,12 @@ import uni9.projetopraticoemsistemas.myhealth.login.model.entity.UsuarioEntity;
 import uni9.projetopraticoemsistemas.myhealth.perfil.apis.PerfilDao;
 import uni9.projetopraticoemsistemas.myhealth.perfil.model.entity.PerfilEntity;
 
-@Database(entities = {MedicamentoEntity.class, LembreteEntity.class, UsuarioEntity.class, PerfilEntity.class}, version = 3, exportSchema = false)
+@Database(entities = {MedicamentoEntity.class,
+        LembreteEntity.class,
+        UsuarioEntity.class,
+        PerfilEntity.class,
+        LembreteAguaEntity.class,
+        ConsumoDiarioEntity.class}, version = 5, exportSchema = false)
 public abstract class MyHealthDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
@@ -33,6 +42,10 @@ public abstract class MyHealthDatabase extends RoomDatabase {
     public abstract UsuarioDao usuarioDao();
 
     public abstract PerfilDao perfilDao();
+
+    public abstract LembreteAguaDao lembreteAguaDao();
+
+    public abstract ConsumoDiarioDao consumoDiarioDao();
 
     public static class Callback extends RoomDatabase.Callback {
 

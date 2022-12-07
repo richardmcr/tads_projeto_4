@@ -38,4 +38,8 @@ public class DateFormatter {
             return null;
         }
     }
+
+    public static String getDataHoje(){
+        return longDateToStringDate(System.currentTimeMillis());
+    }
 }

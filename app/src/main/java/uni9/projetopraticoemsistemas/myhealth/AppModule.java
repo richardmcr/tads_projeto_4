@@ -10,6 +10,13 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.apis.ConsumoDiarioDao;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.apis.LembreteAguaDao;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.mappers.ConsumoDiarioMapper;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.mappers.ConsumoDiarioMapperImpl;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.mappers.LembreteAguaMapper;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.mappers.LembreteAguaMapperImpl;
+import uni9.projetopraticoemsistemas.myhealth.home.agua.repositories.LembreteAguaRepository;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.LembreteDao;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.apis.MedicamentoDao;
 import uni9.projetopraticoemsistemas.myhealth.home.lembretes.mappers.LembreteMapper;
@@ -61,6 +68,16 @@ public class AppModule {
     }
 
     @Provides
+    LembreteAguaMapper provideLembreteAguaMapper() {
+        return new LembreteAguaMapperImpl();
+    }
+
+    @Provides
+    ConsumoDiarioMapper provideConsumoDiarioMapper() {
+        return new ConsumoDiarioMapperImpl();
+    }
+
+    @Provides
     @Singleton
     LembreteDao provideLembreteDao(MyHealthDatabase myHealthDatabase) {
         return myHealthDatabase.lembreteDao();
@@ -86,6 +103,18 @@ public class AppModule {
 
     @Provides
     @Singleton
+    LembreteAguaDao provideLembreteAguaDao(MyHealthDatabase myHealthDatabase) {
+        return myHealthDatabase.lembreteAguaDao();
+    }
+
+    @Provides
+    @Singleton
+    ConsumoDiarioDao provideConsumoDiarioDao(MyHealthDatabase myHealthDatabase) {
+        return myHealthDatabase.consumoDiarioDao();
+    }
+
+    @Provides
+    @Singleton
     LembreteRepository provideLembreteRepository(LembreteDao lembreteDao, LembreteMapper lembreteMapper) {
         return new LembreteRepository(lembreteDao, lembreteMapper);
     }
@@ -106,5 +135,11 @@ public class AppModule {
     @Singleton
     PerfilRepository providePerfilRepository(PerfilDao perfilDao, PerfilMapper perfilMapper) {
         return new PerfilRepository(perfilDao, perfilMapper);
+    }
+
+    @Provides
+    @Singleton
+    LembreteAguaRepository provideLembreteAguaRepository(LembreteAguaDao lembreteAguaDao, LembreteAguaMapper lembreteAguaMapper) {
+        return new LembreteAguaRepository(lembreteAguaDao, lembreteAguaMapper);
     }
 }

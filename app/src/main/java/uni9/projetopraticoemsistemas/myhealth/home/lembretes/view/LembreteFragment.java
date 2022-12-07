@@ -119,7 +119,12 @@ public class LembreteFragment extends Fragment {
                 binding.textInputEditTextHoraInicioTratamento.setText(lembrete.getHoraInicio());
                 binding.textInputEditTextDuracaoTratamento.setText(Objects.isNull(lembrete.getDuracao()) ? "" : String.valueOf(lembrete.getDuracao()));
                 binding.textInputEditTextIntervalo.setText(Objects.isNull(lembrete.getIntervalo()) ? "" : String.valueOf(lembrete.getIntervalo()));
-                binding.switchAlertas.setChecked(lembrete.getAlertas());
+                binding.switchAlertas.setChecked(Objects.nonNull(lembrete.getAlertas()) && lembrete.getAlertas());
+
+                viewModel.setDetalhes(lembrete.getDetalhes());
+                viewModel.setDuracao(lembrete.getDuracao());
+                viewModel.setIntervalo(lembrete.getIntervalo());
+                viewModel.setAlertas(Objects.nonNull(lembrete.getAlertas()) && lembrete.getAlertas());
             }
         });
 
@@ -130,6 +135,8 @@ public class LembreteFragment extends Fragment {
                 binding.textInputEditTextDataInicioTratamento.setText(longDateToStringDate(data));
                 binding.textInputEditTextHoraInicioTratamento.setText(longDateToStringTime(data));
             }
+
+            viewModel.setInicio(data);
         });
 
         viewModel.getEventoLiveData().observe(getViewLifecycleOwner(), evento -> {

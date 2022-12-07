@@ -89,6 +89,18 @@
     <string name="senha_atual">Senha Atual</string>
     <string name="senha_alterada_sucesso">Senha alterada com sucesso!</string>
     <string name="senha_atual_errada">Senha atual errada!</string>
+    <string name="botao_adicionar_agua">Botão adicionar consumo de água</string>
+    <string name="beba_agua">Beba Água!</string>
+    <string name="meta_diaria">Meta Diária</string>
+    <string name="meta_diaria_args">Meta Diária: %1$dmℓ</string>
+    <string name="l">L</string>
+    <string name="ml">mℓ</string>
+    <string name="inicio">Início</string>
+    <string name="botao_hora_inicio_lembrete">Botão hora de início de lembrete</string>
+    <string name="final_">Final</string>
+    <string name="botao_hora_fim_lembrete">Botão hora final de lembretes</string>
+    <string name="horario_lembretes">Horário dos Lembretes</string>
+    <string name="consumo_restante">Consumo Restante: %1$dmℓ</string>
     <string-array name="generos">
         <item>Feminino</item>
         <item>Masculino</item>

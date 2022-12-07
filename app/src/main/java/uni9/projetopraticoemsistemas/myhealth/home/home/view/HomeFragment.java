@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment implements FragmentResultListener {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
+        // binding.extendedFloatingActionButtonAgua.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToAguaFragment()));
         binding.extendedFloatingActionButtonLembretes.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToLembretesFragment()));
         binding.extendedFloatingActionButtonBulaMedicamentos.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomeFragmentDirections.actionHomeFragmentToBuscaMedicamentosFragment()));
 

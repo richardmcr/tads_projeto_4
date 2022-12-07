@@ -13,6 +13,19 @@
         android:layout_gravity="center">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/extendedFloatingActionButtonAgua"
+            style="@style/Theme.MyHealth.Menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/beba_agua"
+            android:visibility="gone"
+            app:icon="@drawable/ic_baseline_glass_water_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/extendedFloatingActionButtonLembretes"
             style="@style/Theme.MyHealth.Menu"
             android:layout_width="match_parent"
@@ -22,7 +35,7 @@
             app:icon="@drawable/ic_baseline_calendar_today_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/extendedFloatingActionButtonAgua" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/extendedFloatingActionButtonBulaMedicamentos"
