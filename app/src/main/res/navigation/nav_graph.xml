@@ -153,4 +153,18 @@
         android:name="uni9.projetopraticoemsistemas.myhealth.configuracoes.alterarsenha.view.AlterarSenhaFragment"
         android:label="@string/alterar_senha"
         tools:layout="@layout/fragment_alterar_senha" />
+    <fragment
+        android:id="@+id/aguaFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.agua.view.AguaFragment"
+        android:label="@string/beba_agua"
+        tools:layout="@layout/fragment_agua">
+        <action
+            android:id="@+id/action_aguaFragment_to_configuracaoAguaFragment"
+            app:destination="@id/configuracaoAguaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configuracaoAguaFragment"
+        android:name="uni9.projetopraticoemsistemas.myhealth.home.agua.view.ConfiguracaoAguaFragment"
+        android:label="@string/configuracoes"
+        tools:layout="@layout/fragment_configuracao_agua" />
 </navigation>
